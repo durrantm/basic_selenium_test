@@ -36,6 +36,7 @@ describe "student loan products" do
       find('button#Continue').click
       expect(find('input#BO_FirstName').value).to eq ''
       expect(find("input#BO_LastName").value).to eq 'testLast'
+      expect(find("input#BO_EmailAddr").value).to eq 'test@salliemae.com'
     end
   end
 
