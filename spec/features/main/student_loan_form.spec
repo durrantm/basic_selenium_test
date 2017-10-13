@@ -1,31 +1,30 @@
+require 'yaml'
 require 'spec_helper'
+require_relative '../../support/page_object.rb'
+require_relative '../../sleepers.rb'
 
 Sleep_lengths = Hash.new
 Sleep_lengths[:short]=2
 Sleep_lengths[:medium]=4
 Sleep_lengths[:long]=14
 
-describe "student loan products" do
-  def sleepy(sleep_length=2)
-    sleep sleep_length
-  end
-  def sleep_short
-    sleep Sleep_lengths[:short]
-  end
+describe 'student loan products' do
+  include Sleepers
 
   describe "Undergraduate Sad Page 1", sad: true, loan_type: 'undergraduate', page_type: 'form' do
+  p = PageObject.new
     it "has a form for undergraduate student loans that is filled out Incorrectly", happy: true, loan_type: 'undergraduate' do
       visit "/student-loans/smart-option-student-loan/"
-      click_link 'Apply for this loan'
+      click_link p.apply_for_loan
       sleep_short
-      fill_in 'BO_FirstName', with: ''
-      fill_in 'BO_MiddleInitial', with: 't'
-      fill_in 'BO_LastName', with: 'testLast'
-      fill_in 'BO_EmailAddr', with: 'test@salliemae.com'
-      fill_in 'BO_PrimaryPhoneNbr', with: '6175551212'
-      select 'JAN', from: 'BO_DOB1'
-      fill_in 'BO_DOB2', with: '01'
-      fill_in 'BO_DOB3', with: '1992'
+      fill_in p.first_name, with: ''
+      fill_in p.middle_initial, with: 't'
+      fill_in p.last_name, with: 'testLast'
+      fill_in p.email_address, with: 'test@salliemae.com'
+      fill_in p.phone, with: '6175551212'
+      select 'JAN', from: p.dob_month
+      fill_in p.dob_day, with: '01'
+      fill_in p.dob_year, with: '1992'
       select 'US Citizen', from: 'BO_Citizenship1'
       fill_in 'BO_SSN1_mask', with: '666'
       fill_in 'BO_SSN2_mask', with: '00'
