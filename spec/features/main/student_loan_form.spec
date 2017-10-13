@@ -1,12 +1,8 @@
 require 'yaml'
 require 'spec_helper'
-require_relative '../../support/page_object.rb'
-require_relative '../../sleepers.rb'
-
-Sleep_lengths = Hash.new
-Sleep_lengths[:short]=2
-Sleep_lengths[:medium]=4
-Sleep_lengths[:long]=14
+require_relative '../../support/page_object'
+require_relative '../../support/sleep_lengths'
+require_relative '../../support/sleepers'
 
 describe 'student loan products' do
   include Sleepers
