@@ -1,7 +1,3 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
 version: 2
 jobs:
   build:
@@ -10,7 +6,6 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ arch }}-{{ checksum "Gemfile.lock" }}
@@ -24,7 +19,6 @@ jobs:
           paths:
             - ./vendor/bundle
           key: v1-dependencies-{{ arch }}-{{ checksum "Gemfile.lock" }}
-      # run tests!
       - run:
           name: run tests
           command: |
@@ -32,7 +26,6 @@ jobs:
             #TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
             rspec --format progress spec/features/main/*_spec.rb
             rspec --format progress spec/features/smokes/*_spec.rb
-      # collect reports
       - store_test_results:
           path: /tmp/test-results
       - store_artifacts:
