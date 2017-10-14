@@ -28,10 +28,10 @@ describe 'student loan products' do
       fill_in p.ssn_first_three_confirm, with: '666'
       fill_in p.ssn_middle_two_confirm, with: '00'
       fill_in p.ssn_last_four_confirm, with: '0000'
-      find p.continue.click
-      expect(find('input#BO_FirstName').value).to eq ''
-      expect(find("input#BO_LastName").value).to eq 'testLast'
-      expect(find("input#BO_EmailAddr").value).to eq 'test@salliemae.com'
+      find(p.continue).click
+      expect(find(p.first_name_input).value).to eq ''
+      expect(find(p.last_name_input).value).to eq 'testLast'
+      expect(find(p.email_address_input).value).to eq 'test@salliemae.com'
     end
   end
 
