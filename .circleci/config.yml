@@ -50,7 +50,7 @@ jobs:
             
             #bundle exec rspec --format progress \
             rspec --format progress spec/features/main/*_spec.rb
-            rspec --format progress spec/features/smoke/*_spec.rb
+            rspec --format progress spec/features/smokes/*_spec.rb
 
       # collect reports
       - store_test_results:
