@@ -51,7 +51,7 @@ jobs:
             #bundle exec rspec --format progress \
             rspec --format progress \
                             --out /tmp/test-results/rspec.xml \
-                            --format progress "${TEST_FILES}"
+                            --format progress spec
 
       # collect reports
       - store_test_results:
