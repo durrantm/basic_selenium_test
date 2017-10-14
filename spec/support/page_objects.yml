@@ -1,4 +1,5 @@
-undergraduate_loan_form_url: '/student-loans/smart-option-student-loan'
+undergraduate_loan_form_url: '/student-loans/smart-option-student-loan/'
+career_training_loan_form_url: '/student-loans/career-training-smart-option-student-loan/'
 apply_for_loan: 'Apply for this loan'
 first_name: 'BO_FirstName'
 middle_initial: 'BO_MiddleInitial'
