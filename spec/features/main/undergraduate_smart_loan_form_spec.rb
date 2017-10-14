@@ -5,10 +5,12 @@ require_relative '../../support/form_data_object'
 require_relative '../../support/sleep_lengths'
 require_relative '../../support/sleepers'
 require_relative '../../support/form_helpers'
+require_relative '../../support/form_sections'
 
 describe 'student loan products' do
   include Sleepers
   include FormHelpers
+  include FormSections
   p = PageObject.new
   d = FormDataObject.new
 
@@ -17,21 +19,8 @@ describe 'student loan products' do
       visit p.undergraduate_loan_form_url
       click_link p.apply_for_loan
       sleep_short
+      fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
-      fill_in p.middle_initial, with: 't'
-      fill_in p.last_name, with: 'testLast'
-      fill_in p.email_address, with: d.email
-      fill_in p.phone, with: '6175551212'
-      select 'JAN', from: p.dob_month
-      fill_in p.dob_day, with: '01'
-      fill_in p.dob_year, with: '1992'
-      select 'US Citizen', from: p.us_citizen
-      fill_in p.ssn_first_three, with: '666'
-      fill_in p.ssn_middle_two, with: '00'
-      fill_in p.ssn_last_four, with: '0000'
-      fill_in p.ssn_first_three_confirm, with: '666'
-      fill_in p.ssn_middle_two_confirm, with: '00'
-      fill_in p.ssn_last_four_confirm, with: '0000'
       find(p.continue).click
       expect(find('#' + p.first_name).value).to eq ''
       expect(find('#' + p.last_name).value).to eq 'testLast'
@@ -49,21 +38,7 @@ describe 'student loan products' do
       visit p.undergraduate_loan_form_url
       click_link p.apply_for_loan
       sleep_short
-      fill_in p.first_name, with: 'testFirst'
-      fill_in p.middle_initial, with: 't'
-      fill_in p.last_name, with: 'testLast'
-      fill_in p.email_address, with: d.email
-      fill_in p.phone, with: '6175551212'
-      select 'JAN', from: p.dob_month
-      fill_in p.dob_day, with: '01'
-      fill_in p.dob_year, with: '1992'
-      select 'US Citizen', from: p.us_citizen
-      fill_in p.ssn_first_three, with: '666'
-      fill_in p.ssn_middle_two, with: '00'
-      fill_in p.ssn_last_four, with: '0000'
-      fill_in p.ssn_first_three_confirm, with: '666'
-      fill_in p.ssn_middle_two_confirm, with: '00'
-      fill_in p.ssn_last_four_confirm, with: '0000'
+      fill_out_basic_information_form(p,d)
       find(p.continue).click
       sleep_medium # Increased from short to medium to medium_long to pass.  md
       expect(find(p.address_info)).to be
@@ -82,57 +57,29 @@ describe 'student loan products' do
       sleep_short
       find('#' + p.school).send_keys :arrow_down
       find('#' + p.school).send_keys :tab
-      select 'Bachelors', from: p.degree
-      select 'Law and Law Studies', from: p.major
-      select 'Full Time', from: p.enrollment_status
-      select 'First Year Masters/Doctorate', from: p.grade_level
-      select 'Jan', from: p.loan_start_month
-      select this_year, from: p.loan_start_year
-      select 'Jan', from: p.loan_end_month
-      select (this_year + 1), from: p.loan_end_year
-      select 'Jan', from: p.graduation_date_month
-      select (this_year + 2), from: p.graduation_date_year
+      fill_out_education_degree_information(p, this_year)
       find(p.continue).click
       sleep_medium # Increased from short to medium to pass.  md
       expect(find('#' + p.copay)).to be
 
-      fill_in p.copay, with: '10000'
-      fill_in p.financial_assistance, with: '4000'
-      fill_in p.loan, with: '4000'
-      fill_in p.requested_loan, with: '2000'
+      fill_out_loan_information(p)
       find(p.continue).click
       sleep_short
       expect(find '#' + p.employment_status).to be
 
-      select 'Employed PT', from: p.employment_status
-      find(p.continue).click
-      fill_in p.employer, with: 'test inc'
-      select 'Engineer', from: p.occupation
-      fill_in p.work_phone, with: '6175551212'
-      fill_in p.work_phone_extension, with: '100'
-      select '10', from: p.employment_length
-      fill_in p.income, with: '50000'
+      fill_out_employment_information(p)
       find(p.continue).click
       expect(find '#' + p.checking_account).to be
 
       check(p.checking_account)
       expect(find '#' + p.checking_amount).to be
 
-      fill_in p.checking_amount, with: '1000'
-      select 'Own', from: p.residence_type
-      fill_in p.mortgage_rent, with: 1000
+      fill_out_financial_information(p)
       find(p.continue).click
       sleep_short
       expect(find '#' + p.primary_contact_first_name).to be
 
-      fill_in p.primary_contact_first_name, with: 'testMomFirst'
-      fill_in p.primary_contact_last_name, with: 'testMomLast'
-      fill_in p.primary_contact_phone, with: '6175551212'
-      select 'Mother', from: p.primary_relationship
-      fill_in p.secondary_contact_first_name, with: 'testDadFirst'
-      fill_in p.secondary_contact_last_name, with: 'testDadLast'
-      fill_in p.secondary_contact_phone, with: '6175551213'
-      select 'Father', from: p.secondary_relationship
+      fill_out_contact_information(p)
       find(p.continue).click
       choose p.how_to_apply, option: 'I'
       find(p.continue).click
@@ -143,20 +90,7 @@ describe 'student loan products' do
         find(p.electronic_consent).click
       end
       sleep_short
-      within_frame(find(p.dialog_frame)) do
-        expect(find(p.title, text: /^Information.*Rates.*Fees$/)).to be
-      end
-
-      within_frame(find(p.dialog_frame)) do
-        find(p.dialog_continue).click
-      end
-      within_frame(find(p.dialog_frame)) do
-        expect(find(p.title, text: /^Privacy Policy$/)).to be
-      end
-
-      within_frame(find(p.dialog_frame)) do
-        find(p.button_continue).click
-      end
+      accept_dialogs(p)
 
       within_frame(find(p.dialog_frame)) do
         find(p.submit_application).click
