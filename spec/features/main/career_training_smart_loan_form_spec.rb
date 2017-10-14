@@ -5,33 +5,20 @@ require_relative '../../support/form_data_object'
 require_relative '../../support/sleep_lengths'
 require_relative '../../support/sleepers'
 require_relative '../../support/form_helpers'
+require_relative '../../support/form_sections'
 
 describe 'student loan products' do
   include Sleepers
   include FormHelpers
+  include FormSections
   p = PageObject.new
   d = FormDataObject.new
-
   describe "Career Training Sad Page 1", sad: true, loan_type: 'career_training', page_type: 'form' do
     it "has a form for career training student loans that is filled out Incorrectly", happy: true, loan_type: 'career_training' do
       visit p.career_training_loan_form_url
       click_link p.apply_for_loan
       sleep_short
-      fill_in p.first_name, with: ''
-      fill_in p.middle_initial, with: 't'
-      fill_in p.last_name, with: 'testLast'
-      fill_in p.email_address, with: d.email
-      fill_in p.phone, with: '6175551212'
-      select 'JAN', from: p.dob_month
-      fill_in p.dob_day, with: '01'
-      fill_in p.dob_year, with: '1992'
-      select 'US Citizen', from: p.us_citizen
-      fill_in p.ssn_first_three, with: '666'
-      fill_in p.ssn_middle_two, with: '00'
-      fill_in p.ssn_last_four, with: '0000'
-      fill_in p.ssn_first_three_confirm, with: '666'
-      fill_in p.ssn_middle_two_confirm, with: '00'
-      fill_in p.ssn_last_four_confirm, with: '0000'
+      fill_out_form_with_first_name_blank(p,d)
       find(p.continue).click
       expect(find('#' + p.first_name).value).to eq ''
       expect(find('#' + p.last_name).value).to eq 'testLast'
@@ -50,31 +37,13 @@ describe 'student loan products' do
       visit p.career_training_loan_form_url
       click_link p.apply_for_loan
       sleep_short
+      fill_out_basic_information_form_with_first_name_blank(p,d)
       fill_in p.first_name, with: 'testFirst'
-      fill_in p.middle_initial, with: 't'
-      fill_in p.last_name, with: 'testLast'
-      fill_in p.email_address, with: d.email
-      fill_in p.phone, with: '6175551212'
-      select 'JAN', from: p.dob_month
-      fill_in p.dob_day, with: '01'
-      fill_in p.dob_year, with: '1992'
-      select 'US Citizen', from: p.us_citizen
-      fill_in p.ssn_first_three, with: '666'
-      fill_in p.ssn_middle_two, with: '00'
-      fill_in p.ssn_last_four, with: '0000'
-      fill_in p.ssn_first_three_confirm, with: '666'
-      fill_in p.ssn_middle_two_confirm, with: '00'
-      fill_in p.ssn_last_four_confirm, with: '0000'
       find(p.continue).click
       sleep_medium # Increased from short to medium to pass.  md
       expect(find(p.address_info)).to be
 
-      fill_in p.street_address, with: '1 main st'
-      fill_in p.street_address_2, with: 'Apt#1'
-      fill_in p.city, with: 'New York'
-      select 'New York', from: p.state
-      fill_in p.zip, with: '10024'
-      select '10', from: p.years_there
+      fill_out_demographics(p)
       find(p.continue).click
       expect(find(p.main_form)).to be
 
