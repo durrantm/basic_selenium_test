@@ -1,6 +1,7 @@
 require 'yaml'
 require 'spec_helper'
 require_relative '../../support/page_object'
+require_relative '../../support/form_data_object'
 require_relative '../../support/sleep_lengths'
 require_relative '../../support/sleepers'
 require_relative '../../support/form_helpers'
@@ -9,6 +10,7 @@ describe 'student loan products' do
   include Sleepers
   include FormHelpers
   p = PageObject.new
+  d = FormDataObject.new
 
   describe "Undergraduate Sad Page 1", sad: true, loan_type: 'undergraduate', page_type: 'form' do
     it "has a form for undergraduate student loans that is filled out Incorrectly", happy: true, loan_type: 'undergraduate' do
@@ -18,12 +20,12 @@ describe 'student loan products' do
       fill_in p.first_name, with: ''
       fill_in p.middle_initial, with: 't'
       fill_in p.last_name, with: 'testLast'
-      fill_in p.email_address, with: 'test@salliemae.com'
+      fill_in p.email_address, with: d.email
       fill_in p.phone, with: '6175551212'
       select 'JAN', from: p.dob_month
       fill_in p.dob_day, with: '01'
       fill_in p.dob_year, with: '1992'
-      select 'US Citizen', from: 'BO_Citizenship1'
+      select 'US Citizen', from: p.us_citizen
       fill_in p.ssn_first_three, with: '666'
       fill_in p.ssn_middle_two, with: '00'
       fill_in p.ssn_last_four, with: '0000'
@@ -33,7 +35,7 @@ describe 'student loan products' do
       find(p.continue).click
       expect(find('#' + p.first_name).value).to eq ''
       expect(find('#' + p.last_name).value).to eq 'testLast'
-      expect(find('#' + p.email_address).value).to eq 'test@salliemae.com'
+      expect(find('#' + p.email_address).value).to eq d.email
     end
   end
 
@@ -50,7 +52,7 @@ describe 'student loan products' do
       fill_in p.first_name, with: 'testFirst'
       fill_in p.middle_initial, with: 't'
       fill_in p.last_name, with: 'testLast'
-      fill_in p.email_address, with: 'test@salliemae.com'
+      fill_in p.email_address, with: d.email
       fill_in p.phone, with: '6175551212'
       select 'JAN', from: p.dob_month
       fill_in p.dob_day, with: '01'
