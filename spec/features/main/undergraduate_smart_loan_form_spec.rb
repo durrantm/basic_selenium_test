@@ -21,7 +21,7 @@ describe 'student loan products' do
       sleep_short
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
-      find(p.continue).click
+      continue
       expect(find('#' + p.first_name).value).to eq ''
       expect(find('#' + p.last_name).value).to eq 'testLast'
       expect(find('#' + p.email_address).value).to eq d.email
@@ -39,17 +39,12 @@ describe 'student loan products' do
       click_link p.apply_for_loan
       sleep_short
       fill_out_basic_information_form(p,d)
-      find(p.continue).click
+      continue
       sleep_medium # Increased from short to medium to medium_long to pass.  md
       expect(find(p.address_info)).to be
 
-      fill_in p.street_address, with: '1 main st'
-      fill_in p.street_address_2, with: 'Apt#1'
-      fill_in p.city, with: 'New York'
-      select 'New York', from: p.state
-      fill_in p.zip, with: '10024'
-      select '10', from: p.years_there
-      find(p.continue).click
+      fill_out_demographics(p)
+      continue
       expect(find(p.main_form)).to be
 
       sleep_short
@@ -58,12 +53,12 @@ describe 'student loan products' do
       find('#' + p.school).send_keys :arrow_down
       find('#' + p.school).send_keys :tab
       fill_out_education_degree_information(p, this_year)
-      find(p.continue).click
+      continue
       sleep_medium # Increased from short to medium to pass.  md
       expect(find('#' + p.copay)).to be
 
       fill_out_loan_information(p)
-      find(p.continue).click
+      continue
       sleep_short
       expect(find '#' + p.employment_status).to be
 
@@ -75,26 +70,18 @@ describe 'student loan products' do
       expect(find '#' + p.checking_amount).to be
 
       fill_out_financial_information(p)
-      find(p.continue).click
+      continue
       sleep_short
       expect(find '#' + p.primary_contact_first_name).to be
 
       fill_out_contact_information(p)
       find(p.continue).click
       choose p.how_to_apply, option: 'I'
-      find(p.continue).click
+      continue
       sleep_short
       expect(find p.dialog_frame).to be
 
-      within_frame(find(p.dialog_frame)) do
-        find(p.electronic_consent).click
-      end
-      sleep_short
-      accept_dialogs(p)
-
-      within_frame(find(p.dialog_frame)) do
-        find(p.submit_application).click
-      end
+      submit_application(p)
 
       sleepy Sleep_lengths[:long]
       expect(find(p.title, text: /^Application Status$/)).to be

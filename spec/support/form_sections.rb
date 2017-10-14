@@ -106,5 +106,20 @@ module FormSections
       find(p.button_continue).click
     end
   end
+
+  def submit_application(p)
+    within_frame(find(p.dialog_frame)) do
+      find(p.electronic_consent).click
+    end
+    sleep_short
+    accept_dialogs(p)
+    within_frame(find(p.dialog_frame)) do
+      find(p.submit_application).click
+    end
+  end
+
+  def continue
+    find(p.continue).click
+  end
 end
 
