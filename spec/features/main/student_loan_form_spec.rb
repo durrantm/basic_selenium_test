@@ -6,11 +6,11 @@ require_relative '../../support/sleepers'
 
 describe 'student loan products' do
   include Sleepers
+  p = PageObject.new
 
   describe "Undergraduate Sad Page 1", sad: true, loan_type: 'undergraduate', page_type: 'form' do
-  p = PageObject.new
     it "has a form for undergraduate student loans that is filled out Incorrectly", happy: true, loan_type: 'undergraduate' do
-      visit "/student-loans/smart-option-student-loan/"
+      visit p.undergraduate_loan_form_url
       click_link p.apply_for_loan
       sleep_short
       fill_in p.first_name, with: ''
@@ -37,26 +37,26 @@ describe 'student loan products' do
 
   describe "Undergraduate Happy All Pages", happy: true, smoke: true, loan_type: 'undergraduate', page_type: 'form' do
     it "has a form for undergraduate student loans", smoke: true do
-      visit "/student-loans/smart-option-student-loan/"
-      click_link 'Apply for this loan'
+      visit p.undergraduate_loan_form_url
+      click_link p.apply_for_loan
       expect(find('form#mainform')).to be
     end
     it "has a form for undergraduate student loans that is filled out correctly", happy: true, loan_type: 'undergraduate' do
-      visit "/student-loans/smart-option-student-loan/"
-      click_link 'Apply for this loan'
+      visit p.undergraduate_loan_form_url
+      click_link p.apply_for_loan
       sleep_short
-      fill_in 'BO_FirstName', with: 'testFirst'
-      fill_in 'BO_MiddleInitial', with: 't'
-      fill_in 'BO_LastName', with: 'testLast'
-      fill_in 'BO_EmailAddr', with: 'test@salliemae.com'
-      fill_in 'BO_PrimaryPhoneNbr', with: '6175551212'
-      select 'JAN', from: 'BO_DOB1'
-      fill_in 'BO_DOB2', with: '01'
-      fill_in 'BO_DOB3', with: '1992'
-      select 'US Citizen', from: 'BO_Citizenship1'
-      fill_in 'BO_SSN1_mask', with: '666'
-      fill_in 'BO_SSN2_mask', with: '00'
-      fill_in 'BO_SSN3_mask', with: '0000'
+      fill_in p.first_name, with: 'testFirst'
+      fill_in p.middle_initial, with: 't'
+      fill_in p.last_name, with: 'testLast'
+      fill_in p.email_address, with: 'test@salliemae.com'
+      fill_in p.phone, with: '6175551212'
+      select 'JAN', from: p.dob_month
+      fill_in p.dob_day, with: '01'
+      fill_in p.dob_year, with: '1992'
+      select 'US Citizen', from: p.us_citizen
+      fill_in p.ssn_first_three, with: '666'
+      fill_in p.ssn_middle_two, with: '00'
+      fill_in p.ssn_last_four, with: '0000'
       fill_in 'BO_ConfirmSSN1_mask', with: '666'
       fill_in 'BO_ConfirmSSN2_mask', with: '00'
       fill_in 'BO_ConfirmSSN3_mask', with: '0000'
@@ -64,14 +64,14 @@ describe 'student loan products' do
       sleepy  Sleep_lengths[:medium] # Increased from short to medium to pass.  md
       expect(find('div#BO_AddressInfo')).to be
 
-      fill_in 'BO_PermStreetAddr1', with: '1 main st'
-      fill_in 'BO_PermStreetAddr2', with: 'Apt#1'
-      fill_in 'BO_PermCity', with: 'New York'
-      select 'New York', from: 'BO_PermState'
-      fill_in 'BO_PermZipCode', with: '10024'
-      select '10', from: 'BO_PermAddrLengthYears'
-      find('button#Continue').click
-      expect(find('form#mainform')).to be
+      fill_in p.street_address, with: '1 main st'
+      fill_in p.street_address_2, with: 'Apt#1'
+      fill_in p.city, with: 'New York'
+      select 'New York', from: p.state
+      fill_in p.zip, with: '10024'
+      select '10', from: p.years_there
+      find(p.continue).click
+      expect(find(p.main_form)).to be
 
       fill_in 'BO_School', with: 'NEW YORK LAW SCHOOL, NEW YORK, NY, 00278300'
       sleep_short
