@@ -49,8 +49,8 @@ jobs:
             #TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
             
             #bundle exec rspec --format progress \
-            rspec --format progress spec/features/main/*
-            rspec --format progress spec/features/smoke/*
+            rspec --format progress spec/features/main/*_spec.rb
+            rspec --format progress spec/features/smoke/*_spec.rb
 
       # collect reports
       - store_test_results:
