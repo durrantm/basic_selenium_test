@@ -28,7 +28,7 @@ describe 'student loan products' do
     end
   end
 
-  describe "Undergraduate Happy All Pages", happy: true, smoke: true, loan_type: 'undergraduate', page_type: 'form' do
+  describe "Career Training Happy All Pages", happy: true, smoke: true, loan_type: 'career_training', page_type: 'form' do
     it "has a form for carer training student loans", smoke: true, loan_Type: 'career_training' do
       visit p.career_training_loan_form_url
       click_link p.apply_for_loan

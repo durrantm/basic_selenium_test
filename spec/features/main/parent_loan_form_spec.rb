@@ -15,7 +15,7 @@ describe 'student loan products' do
   d = FormDataObject.new
 
   describe "Parent Sad Page 1", sad: true, loan_type: 'parent', page_type: 'form' do
-    it "has a form for undergraduate student loans that is filled out Incorrectly", happy: true, loan_type: 'undergraduate' do
+    it "has a form for parent loans that is filled out Incorrectly", happy: true, loan_type: 'parent' do
       visit p.parent_loan_form_url
       click_link p.apply_for_loan
       sleep_short

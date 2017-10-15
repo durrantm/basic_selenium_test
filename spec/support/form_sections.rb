@@ -85,7 +85,7 @@ module FormSections
     select 'Mother', from: p.primary_relationship
     fill_in p.secondary_contact_first_name, with: 'testDadFirst'
     fill_in p.secondary_contact_last_name, with: 'testDadLast'
-    fill_in p.secondary_contact_phone, with: '6175551212'
+    fill_in p.secondary_contact_phone, with: '6175551213'
     select 'Father', from: p.secondary_relationship
   end
 
