@@ -118,7 +118,7 @@ module FormSections
     end
   end
 
-  def continue
+  def continue(p)
     find(p.continue).click
   end
 end

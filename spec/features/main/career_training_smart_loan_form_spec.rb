@@ -20,7 +20,7 @@ describe 'student loan products' do
       sleep_short
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
-      continue
+      continue(p)
       expect(find('#' + p.first_name).value).to eq ''
       expect(find('#' + p.last_name).value).to eq 'testLast'
       expect(find('#' + p.email_address).value).to eq d.email
@@ -39,12 +39,12 @@ describe 'student loan products' do
       click_link p.apply_for_loan
       sleep_short
       fill_out_basic_information_form(p,d)
-      continue
+      continue(p)
       sleep_medium # Increased from short to medium to pass.  md
       expect(find(p.address_info)).to be
 
       fill_out_demographics(p)
-      continue
+      continue(p)
       expect(find(p.main_form)).to be
 
       sleep_short
@@ -53,18 +53,18 @@ describe 'student loan products' do
       find('#' + p.school).send_keys :arrow_down
       find('#' + p.school).send_keys :tab
       fill_out_education_certificate_information(p, this_year)
-      continue
+      continue(p)
       sleep_medium # Increased from short to medium to pass.  md
       expect(find('#' + p.copay)).to be
 
       fill_out_loan_information(p)
-      continue
+      continue(p)
       sleep_short
       expect(find '#' + p.employment_status).to be
 
       fill_out_employment_information(p)
 
-      continue
+      continue(p)
       expect(find '#' + p.checking_account).to be
 
       check(p.checking_account)
@@ -72,15 +72,15 @@ describe 'student loan products' do
 
       fill_out_financial_information(p)
 
-      continue
+      continue(p)
       sleep_short
       expect(find '#' + p.primary_contact_first_name).to be
 
       fill_out_contact_information(p)
 
-      continue
+      continue(p)
       choose p.how_to_apply, option: 'I'
-      find(p.continue).click
+      continue(p)
       sleep_short
       expect(find p.dialog_frame).to be
 
