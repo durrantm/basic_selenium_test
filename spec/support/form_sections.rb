@@ -46,6 +46,10 @@ module FormSections
     select 'Law and Law Studies', from: p.major
     select 'Full Time', from: p.enrollment_status
     select 'First Year Masters/Doctorate', from: p.grade_level
+    fill_out_years(p, this_year)
+  end
+
+  def fill_out_years(p, this_year)
     select 'Jan', from: p.loan_start_month
     select this_year, from: p.loan_start_year
     select 'Jan', from: p.loan_end_month
