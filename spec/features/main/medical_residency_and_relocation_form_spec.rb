@@ -52,18 +52,19 @@ describe 'student loan products' do
       find('#' + p.school).send_keys :arrow_down
       find('#' + p.school).send_keys :tab
       select 'Doctor of Medicine', from: p.degree
-      select 'Medical', from: p.major
+      select 'MD - Dermatology', from: p.major
       select 'Full Time', from: p.enrollment_status
-      select 'First Year Masters/Doctorate', from: p.grade_level
-      find('#' + p.periods).send_keys :arrow_down
-      find('#' + p.periods).send_keys :tab
-      select 'Jan', from: 'BO_AnticipatedGradDate1'
-      select (this_year+2), from: 'BO_AnticipatedGradDate2'
+#      select 'First Year Masters/Doctorate', from: p.grade_level
+#      find('#' + p.periods).send_keys :arrow_down
+#      find('#' + p.periods).send_keys :tab
+      select 'Jan', from: p.graduation_date_month
+      select (this_year+1), from: p.graduation_date_year
       continue(p)
       sleep_medium # Increased from short to medium to pass.  md
-      expect(find('#' + p.copay)).to be
-
-      fill_out_loan_information(p)
+#      expect(find('#' + p.copay)).to be
+#sleep 2000
+      fill_in p.requested_loan, with: 10000
+      fill_out_disbursement_information(p, this_year)
       continue(p)
       sleep_short
       expect(find '#' + p.employment_status).to be

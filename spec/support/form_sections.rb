@@ -106,6 +106,17 @@ module FormSections
     select 'Father', from: p.secondary_relationship
   end
 
+  def fill_out_disbursement_information(p, this_year)
+    select 'Jan', from: p.disbursement_date_1_month
+    select '01', from:  p.disbursement_date_1_day
+    select (this_year+1), from: p.disbursement_date_1_year
+    select 'Jun', from: p.disbursement_date_2_month
+    select '01', from:  p.disbursement_date_2_day
+    select (this_year+1), from: p.disbursement_date_2_year
+    fill_in p.disbursement_amount_1, with: 5000
+    fill_in p.disbursement_amount_2, with: 5000
+  end
+
   def accept_dialogs(p)
     within_frame(find(p.dialog_frame)) do
       expect(find(p.title, text: /^Information.*Rates.*Fees$/)).to be

@@ -56,19 +56,12 @@ describe 'student loan products' do
       select 'Full Time', from: p.enrollment_status
       select 'Jan', from: p.graduation_date_month
       select this_year, from: p.graduation_date_year
-      select 'Jan', from: 'BO_ExamDate1'
-      select this_year, from: 'BO_ExamDate2'
+      select 'Jan', from: p.exam_date_month
+      select this_year, from: p.exam_date_year
       continue(p)
       sleep_medium # Increased from short to medium to pass.  md
-      fill_in 'BO_ReqLoanAmt', with: 10000
-      select 'Jan', from: 'BO_DisbDate11'
-      select '01', from:  'BO_DisbDate12'
-      select (this_year+1), from: 'BO_DisbDate13'
-      select 'Jun', from: 'BO_DisbDate21'
-      select '01', from:  'BO_DisbDate22'
-      select (this_year+1), from: 'BO_DisbDate23'
-      fill_in 'BO_DisbAmount1', with: 5000
-      fill_in 'BO_DisbAmount2', with: 5000
+      fill_in p.requested_loan, with: 10000
+      fill_out_disbursement_information(p, this_year)
       continue(p)
       sleep_short
       expect(find '#' + p.employment_status).to be
@@ -91,7 +84,7 @@ describe 'student loan products' do
       sleep_short
       expect(find p.dialog_frame).to be
       within_frame(find(p.dialog_frame)) do
-        find('img#ElectronicConsentAccept').click
+        find(p.electronic_consent).click
       end
       sleep_short
       within_frame(find(p.dialog_frame)) do

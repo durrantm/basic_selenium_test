@@ -61,7 +61,6 @@ describe 'student loan products' do
       select (this_year+2), from: 'BO_AnticipatedGradDate2'
       continue(p)
       sleep_medium # Increased from short to medium to pass.  md
-      expect(find('#' + p.copay)).to be
 
       fill_out_loan_information(p)
       continue(p)

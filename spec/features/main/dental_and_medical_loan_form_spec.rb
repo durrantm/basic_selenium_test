@@ -57,8 +57,8 @@ describe 'student loan products' do
       select 'First Year Masters/Doctorate', from: p.grade_level
       find('#' + p.periods).send_keys :arrow_down
       find('#' + p.periods).send_keys :tab
-      select 'Jan', from: 'BO_AnticipatedGradDate1'
-      select (this_year+2), from: 'BO_AnticipatedGradDate2'
+      select 'Jan', from: p.graduation_date_month
+      select (this_year+2), from: p.graduation_date_year
       continue(p)
       sleep_medium # Increased from short to medium to pass.  md
       expect(find('#' + p.copay)).to be

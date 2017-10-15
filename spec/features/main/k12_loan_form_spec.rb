@@ -51,9 +51,9 @@ describe 'K12 loan products' do
       sleep_short
       fill_in p.student_first_name, with: 'testfirst'
       fill_in p.student_last_name, with: 'testLast'
-      select 'JAN', from: 'BO_ST_DOB1'
-      fill_in 'BO_ST_DOB2', with: '01'
-      fill_in 'BO_ST_DOB3', with: '1996'
+      select 'JAN', from: p.student_dob_month
+      fill_in p.student_dob_day, with: '01'
+      fill_in p.student_dob_year, with: '1996'
       fill_out_student_ssn_and_confirm_ssn(p)
       fill_in p.school, with: "NEW YORK MILITARY"
       sleep_short
