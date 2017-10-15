@@ -1,6 +1,7 @@
 undergraduate_loan_form_url: '/student-loans/smart-option-student-loan/'
 parent_loan_form_url: '/student-loans/parent-loan/'
 career_training_loan_form_url: '/student-loans/career-training-smart-option-student-loan/'
+k12_loan_form_url: '/student-loans/private-school-loan/'
 apply_for_loan: 'Apply for this loan'
 first_name: 'BO_FirstName'
 middle_initial: 'BO_MiddleInitial'

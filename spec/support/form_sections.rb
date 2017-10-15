@@ -11,13 +11,26 @@ module FormSections
     fill_in p.dob_day, with: '01'
     fill_in p.dob_year, with: '1978'
     select 'US Citizen', from: p.us_citizen
+    fill_out_ssn_and_confirm_ssn(p)
+	end
+
+  def fill_out_ssn_and_confirm_ssn(p)
     fill_in p.ssn_first_three, with: '666'
     fill_in p.ssn_middle_two, with: '00'
     fill_in p.ssn_last_four, with: '0000'
     fill_in p.ssn_first_three_confirm, with: '666'
     fill_in p.ssn_middle_two_confirm, with: '00'
     fill_in p.ssn_last_four_confirm, with: '0000'
-	end
+  end
+
+  def fill_out_student_ssn_and_confirm_ssn(p)
+    fill_in p.student_SSN_first_3, with: '666'
+    fill_in p.student_SSN_middle_2, with: '01'
+    fill_in p.student_SSN_last_4, with: '0000'
+    fill_in p.student_SSN_first_3_confirm, with: '666'
+    fill_in p.student_SSN_middle_2_confirm, with: '01'
+    fill_in p.student_SSN_last_4_confirm, with: '0000'
+  end
 
   def fill_out_demographics(p)
     fill_in p.street_address, with: '1 main st'
