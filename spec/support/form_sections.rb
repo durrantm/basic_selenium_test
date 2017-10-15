@@ -9,7 +9,7 @@ module FormSections
     fill_in p.phone, with: '6175551212'
     select 'JAN', from: p.dob_month
     fill_in p.dob_day, with: '01'
-    fill_in p.dob_year, with: '1992'
+    fill_in p.dob_year, with: '1978'
     select 'US Citizen', from: p.us_citizen
     fill_in p.ssn_first_three, with: '666'
     fill_in p.ssn_middle_two, with: '00'
@@ -85,7 +85,7 @@ module FormSections
     select 'Mother', from: p.primary_relationship
     fill_in p.secondary_contact_first_name, with: 'testDadFirst'
     fill_in p.secondary_contact_last_name, with: 'testDadLast'
-    fill_in p.secondary_contact_phone, with: '6175551213'
+    fill_in p.secondary_contact_phone, with: '6175551212'
     select 'Father', from: p.secondary_relationship
   end
 
