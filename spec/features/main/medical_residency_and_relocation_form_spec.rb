@@ -88,7 +88,19 @@ describe 'student loan products' do
       sleep_short
       expect(find p.dialog_frame).to be
 
-      submit_application(p)
+      within_frame(find(p.dialog_frame)) do
+        find(p.electronic_consent).click
+      end
+
+      sleep_short
+      within_frame(find(p.dialog_frame)) do
+        find(p.button_continue).click
+      end
+
+      sleep_short
+      within_frame(find(p.dialog_frame)) do
+        find(p.submit_application).click
+      end
 
       sleepy Sleep_lengths[:long]
       expect(find(p.title, text: /^Application Status$/)).to be
