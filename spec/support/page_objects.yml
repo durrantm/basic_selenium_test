@@ -1,3 +1,4 @@
+require 'page_object_urls.yml'
 undergraduate_loan_form_url: '/student-loans/smart-option-student-loan'
 undergraduate_loan_form_id: "?RefID=1905000001"
 parent_loan_form_url: '/student-loans/parent-loan'
