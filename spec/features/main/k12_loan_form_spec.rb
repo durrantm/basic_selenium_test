@@ -15,7 +15,7 @@ describe 'K12 loan products' do
   d = FormDataObject.new
   describe "K12 Sad Page 1", sad: true, loan_type: 'k12', page_type: 'form' do
     it "has a form for K12 student loans that is filled out Incorrectly", happy: true, loan_type: 'k12' do
-      visit p.k12_loan_form_url
+      visit p.k12_loan_form_url + p.k12_loan_form_id
       click_link p.apply_for_loan
       sleep_short
       fill_out_basic_information_form(p,d)
@@ -30,12 +30,12 @@ describe 'K12 loan products' do
 
   describe "K12 Training Happy All Pages", happy: true, smoke: true, loan_type: 'k12', page_type: 'form' do
     it "has a form for k12 training student loans", smoke: true, loan_type: 'k12' do
-      visit p.k12_loan_form_url
+      visit p.k12_loan_form_url + p.k12_loan_form_id
       click_link p.apply_for_loan
       expect(find(p.main_form)).to be
     end
     it "has a form for K12 student loans that is filled out correctly", happy: true, loan_type: 'k12' do
-      visit p.k12_loan_form_url
+      visit p.k12_loan_form_url + p.k12_loan_form_id
       click_link p.apply_for_loan
       sleep_short
       fill_out_basic_information_form(p,d)
