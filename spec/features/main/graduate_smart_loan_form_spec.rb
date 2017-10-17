@@ -16,7 +16,7 @@ describe 'student loan products' do
 
   describe "Graduate Sad Page 1", sad: true, loan_type: 'graduate', page_type: 'form' do
     it "has a form for Graduate student loans that is filled out Incorrectly", happy: true, loan_type: 'graduate' do
-      visit p.graduate_loan_form_url
+      visit p.graduate_loan_form_url + p.graduate_loan_form_id
       click_link p.apply_for_loan
       sleep_short
       fill_out_basic_information_form(p,d)
@@ -30,12 +30,12 @@ describe 'student loan products' do
 
   describe "Graduate Happy All Pages", happy: true, smoke: true, loan_type: 'graduate', page_type: 'form' do
     it "has a form for Graduate student loans", smoke: true do
-      visit p.graduate_loan_form_url
+      visit p.graduate_loan_form_url + p.graduate_loan_form_id
       click_link p.apply_for_loan
       expect(find(p.main_form)).to be
     end
     it "has a form for Graduate student loans that is filled out correctly", happy: true, loan_type: 'graduate' do
-      visit p.graduate_loan_form_url
+      visit p.graduate_loan_form_url + p.graduate_loan_form_id
       click_link p.apply_for_loan
       sleep_short
       fill_out_basic_information_form(p,d)
