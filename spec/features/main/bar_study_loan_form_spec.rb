@@ -16,9 +16,9 @@ describe 'student loan products' do
 
   describe "Bar Study Sad Page 1", sad: true, loan_type: 'bar', page_type: 'form' do
     it "has a form for Bar Study student loans that is filled out Incorrectly", happy: true, loan_type: 'graduate' do
-      visit p.bar_study_loan_form_url +  p.bar_study_loan_form_id
-      click_link p.apply_for_loan
+      visit p.bar_study_loan_form_url + p.bar_study_loan_form_id
       sleep_short
+      click_on('Apply for this loan') if TEST_ENVIRONMENT == 'production'
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
       continue(p)
@@ -31,12 +31,12 @@ describe 'student loan products' do
   describe "Bar Study Happy All Pages", happy: true, smoke: true, loan_type: 'graduate', page_type: 'form' do
     it "has a form for Bar Study student loans", smoke: true do
       visit p.bar_study_loan_form_url +  p.bar_study_loan_form_id
-      click_link p.apply_for_loan
+      click_on('Apply for this loan') if TEST_ENVIRONMENT == 'production'
       expect(find(p.main_form)).to be
     end
     it "has a form for Bar Study student loans that is filled out correctly", happy: true, loan_type: 'graduate' do
       visit p.bar_study_loan_form_url +  p.bar_study_loan_form_id
-      click_link p.apply_for_loan
+      click_on('Apply for this loan') if TEST_ENVIRONMENT == 'production'
       sleep_short
       fill_out_basic_information_form(p,d)
       continue(p)

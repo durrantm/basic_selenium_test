@@ -2,6 +2,7 @@ require 'rspec'
 require 'capybara/rspec'
 require 'capybara/dsl'
 require 'selenium-webdriver'
+TEST_ENVIRONMENT='production'
 Capybara.configure do |config|
   config.run_server = false
   config.default_driver = :selenium
