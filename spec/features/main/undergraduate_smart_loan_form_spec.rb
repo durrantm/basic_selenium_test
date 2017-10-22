@@ -16,9 +16,7 @@ describe 'student loan products' do
 
   describe "Undergraduate Sad Page 1", sad: true, loan_type: 'undergraduate', page_type: 'form' do
     it "has a form for undergraduate student loans that is filled out Incorrectly", happy: true, loan_type: 'undergraduate' do
-      visit p.undergraduate_loan_form_url + p.undergraduate_loan_form_id
-#sleep 5000
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.undergraduate_loan_form_url, p.undergraduate_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
@@ -31,17 +29,15 @@ describe 'student loan products' do
 
   describe "Undergraduate Happy All Pages", happy: true, smoke: true, loan_type: 'undergraduate', page_type: 'form' do
     it "has a form for undergraduate student loans", smoke: true do
-      visit p.undergraduate_loan_form_url + p.undergraduate_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.undergraduate_loan_form_url, p.undergraduate_loan_form_id, p)
       expect(find(p.main_form)).to be
     end
     it "has a form for undergraduate student loans that is filled out correctly", happy: true, loan_type: 'undergraduate' do
-      visit p.undergraduate_loan_form_url + p.undergraduate_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.undergraduate_loan_form_url, p.undergraduate_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       continue(p)
-      sleep_medium # Increased from short to medium to medium_long to pass.  md
+      sleep_medium # Increased from short to medium to to pass.  md
       expect(find(p.address_info)).to be
 
       fill_out_demographics(p)
@@ -49,7 +45,7 @@ describe 'student loan products' do
       expect(find(p.main_form)).to be
 
       sleep_short
-      fill_in p.school, with: 'NEW YORK LAW SCHOOL, NEW YORK, NY, 00278300'
+      fill_in p.school, with: 'TRINITY'
       sleep_short
       find('#' + p.school).send_keys :arrow_down
       find('#' + p.school).send_keys :tab
