@@ -15,8 +15,7 @@ describe 'student loan products' do
   d = FormDataObject.new
   describe "Career Training Sad Page 1", sad: true, loan_type: 'career_training', page_type: 'form' do
     it "has a form for career training student loans that is filled out Incorrectly", happy: true, loan_type: 'career_training' do
-      visit p.career_training_loan_form_url + p.career_training_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.career_training_loan_form_url, p.career_training_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
@@ -30,13 +29,11 @@ describe 'student loan products' do
 
   describe "Career Training Happy All Pages", happy: true, smoke: true, loan_type: 'career_training', page_type: 'form' do
     it "has a form for carer training student loans", smoke: true, loan_Type: 'career_training' do
-      visit p.career_training_loan_form_url + p.career_training_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.career_training_loan_form_url, p.career_training_loan_form_id, p)
       expect(find(p.main_form)).to be
     end
     it "has a form for career training student loans that is filled out correctly", happy: true, loan_type: 'career_training' do
-      visit p.career_training_loan_form_url + p.career_training_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.career_training_loan_form_url, p.career_training_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       continue(p)
