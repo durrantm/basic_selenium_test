@@ -16,8 +16,7 @@ describe 'student loan products' do
 
   describe "MBA Sad Page 1", sad: true, loan_type: 'mba', page_type: 'form' do
     it "has a form for MBA student loans that is filled out Incorrectly", happy: true, loan_type: 'mba' do
-      visit p.mba_loan_form_url + p.mba_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.mba_loan_form_url, p.mba_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
@@ -30,13 +29,12 @@ describe 'student loan products' do
 
   describe "MBA Happy All Pages", happy: true, smoke: true, loan_type: 'mba', page_type: 'form' do
     it "has a form for MBA student loans", smoke: true do
-      visit p.mba_loan_form_url + p.mba_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.mba_loan_form_url, p.mba_loan_form_id, p)
+      sleep_short
       expect(find(p.main_form)).to be
     end
     it "has a form for MBA student loans that is filled out correctly", happy: true, loan_type: 'mba' do
-      visit p.mba_loan_form_url + p.mba_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.mba_loan_form_url, p.mba_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       continue(p)
@@ -49,7 +47,7 @@ describe 'student loan products' do
 
       sleep_short
 
-      fill_in p.school, with: 'COLUMBIA UNIVERSITY IN THE CITY OF NEW YORK'
+      fill_in p.school, with: 'COLUMBIA UNIVERSITY'
       sleep_short
       find('#' + p.school).send_keys :arrow_down
       find('#' + p.school).send_keys :tab
