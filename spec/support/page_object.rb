@@ -2,7 +2,7 @@ class PageObject
 
   def initialize
     load_page_object_file('spec/support/page_objects.yml')
-    load_page_object_file('spec/support/page_object_urls.yml')
+    load_page_object_file('spec/support/urls.yml')
   end
 
   private

@@ -14,10 +14,20 @@ describe 'student loan products' do
   p = PageObject.new
   d = FormDataObject.new
 
+  def go_to_loan_application_form(page)
+    p = page
+    if TEST_ENVIRONMENT == 'production'
+      visit p.bar_study_loan_form_url + p.bar_study_loan_form_id
+    else
+      visit '?NavPoint=APPLY&'+ p.bar_study_loan_form_id
+    end
+    sleep_short
+    click_on('Apply for this loan') if TEST_ENVIRONMENT == 'production'
+  end
+
   describe "Bar Study Sad Page 1", sad: true, loan_type: 'bar', page_type: 'form' do
     it "has a form for Bar Study student loans that is filled out Incorrectly", happy: true, loan_type: 'graduate' do
-      visit p.bar_study_loan_form_url + p.bar_study_loan_form_id
-      sleep_short
+      go_to_loan_application_form(p)
       click_on('Apply for this loan') if TEST_ENVIRONMENT == 'production'
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
@@ -30,14 +40,12 @@ describe 'student loan products' do
 
   describe "Bar Study Happy All Pages", happy: true, smoke: true, loan_type: 'graduate', page_type: 'form' do
     it "has a form for Bar Study student loans", smoke: true do
-      visit p.bar_study_loan_form_url +  p.bar_study_loan_form_id
+      go_to_loan_application_form(p)
       click_on('Apply for this loan') if TEST_ENVIRONMENT == 'production'
       expect(find(p.main_form)).to be
     end
     it "has a form for Bar Study student loans that is filled out correctly", happy: true, loan_type: 'graduate' do
-      visit p.bar_study_loan_form_url +  p.bar_study_loan_form_id
-      click_on('Apply for this loan') if TEST_ENVIRONMENT == 'production'
-      sleep_short
+      go_to_loan_application_form(p)
       fill_out_basic_information_form(p,d)
       continue(p)
       sleep_medium # Increased from short to medium to medium_long to pass.  md
@@ -49,6 +57,9 @@ describe 'student loan products' do
 
       sleep_short
       fill_in p.school, with: 'NEW YORK LAW SCHOOL, NEW YORK, NY, 00278300'
+      fill_in p.school, with: 'DRAKE' unless PRODUCTION
+      #todo refactor above 2 lines as more cases appear
+
       sleep_short
       find('#' + p.school).send_keys :arrow_down
       find('#' + p.school).send_keys :tab
@@ -68,6 +79,7 @@ describe 'student loan products' do
 
       fill_out_employment_information(p)
       continue(p)
+      sleep_short
       expect(find '#' + p.checking_account).to be
 
       check(p.checking_account)

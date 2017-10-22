@@ -2,11 +2,17 @@ require 'rspec'
 require 'capybara/rspec'
 require 'capybara/dsl'
 require 'selenium-webdriver'
-TEST_ENVIRONMENT='production'
+TEST_ENVIRONMENT='JV2'
+PRODUCTION = (TEST_ENVIRONMENT == 'production' ? true : false)
+JV2 = (TEST_ENVIRONMENT == 'JV2' ? true : false)
 Capybara.configure do |config|
   config.run_server = false
   config.default_driver = :selenium
-  config.app_host = 'https://www.salliemae.com' # change url
+  if TEST_ENVIRONMENT == 'production' then
+    config.app_host = 'https://www.salliemae.com?' # change url
+  else
+    config.app_host = "https://opennetwld-qa6.salliemae.com/W2WPortal?"
+  end
 end
 Capybara.register_driver :selenium do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)
