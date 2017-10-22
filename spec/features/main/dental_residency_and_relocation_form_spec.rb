@@ -16,8 +16,7 @@ describe 'student loan products' do
 
   describe "Dental Residency and relocation Sad Page 1", sad: true, loan_type: 'dental_residency', page_type: 'form' do
     it "has a form for Dental Residency and Relocation loans that is filled out Incorrectly", happy: true, loan_type: 'dental_residency' do
-      visit p.dental_residency_and_relocation_loan_form_url + p.dental_residency_and_relocation_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.dental_residency_and_relocation_loan_form_url, p.dental_residency_and_relocation_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
@@ -30,13 +29,11 @@ describe 'student loan products' do
 
   describe "Dental Residency and relocation Happy All Pages", happy: true, smoke: true, loan_type: 'dental_residency', page_type: 'form' do
     it "has a form for Dental Residency and relocation student loans", smoke: true do
-      visit p.dental_residency_and_relocation_loan_form_url + p.dental_residency_and_relocation_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.dental_residency_and_relocation_loan_form_url, p.dental_residency_and_relocation_loan_form_id, p)
       expect(find(p.main_form)).to be
     end
     it "has a form for Dental Residency and relocation student loans that is filled out correctly", happy: true, loan_type: 'dental_residency' do
-      visit p.dental_residency_and_relocation_loan_form_url + p.dental_residency_and_relocation_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.dental_residency_and_relocation_loan_form_url, p.dental_residency_and_relocation_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       continue(p)
@@ -47,22 +44,34 @@ describe 'student loan products' do
       continue(p)
       expect(find(p.main_form)).to be
 
-      fill_in p.school, with: 'NEW YORK INSTITUTE'
+      fill_in p.school, with: 'TRINITY'
       sleep_short
       find('#' + p.school).send_keys :arrow_down
       find('#' + p.school).send_keys :tab
-      select 'Doctor of Medicine', from: p.degree
-      select 'Medical', from: p.major
+      if PRODUCTION
+        select 'Doctor of Medicine', from: p.degree
+        select 'Medical', from: p.major
+      else
+        select 'Doctor of Dental Surgery/Doctor of Dental Medicine', from: p.degree
+        select 'DDS - Advanced Education In General Dentistry', from: p.major
+      end
       select 'Full Time', from: p.enrollment_status
-      select 'First Year Masters/Doctorate', from: p.grade_level
-      find('#' + p.periods).send_keys :arrow_down
-      find('#' + p.periods).send_keys :tab
+      if PRODUCTION
+        select 'First Year Masters/Doctorate', from: p.grade_level
+        find('#' + p.periods).send_keys :arrow_down
+        find('#' + p.periods).send_keys :tab
+      end
       select 'Jan', from: 'BO_AnticipatedGradDate1'
-      select (this_year+2), from: 'BO_AnticipatedGradDate2'
+      select (this_year+1), from: 'BO_AnticipatedGradDate2'
       continue(p)
       sleep_medium # Increased from short to medium to pass.  md
 
-      fill_out_loan_information(p)
+      if PRODUCTION
+        fill_out_loan_information(p)
+      else
+        fill_in p.requested_loan, with: '10000'
+        fill_out_disbursement_information(p, this_year)
+      end
       continue(p)
       sleep_short
       expect(find '#' + p.employment_status).to be
@@ -85,9 +94,22 @@ describe 'student loan products' do
       continue(p)
       sleep_short
       expect(find p.dialog_frame).to be
-
-      submit_application(p)
-
+      if PRODUCTION
+        submit_application(p)
+      else
+        within_frame(find(p.dialog_frame)) do
+          find(p.electronic_consent).click
+        end
+        within_frame(find(p.dialog_frame)) do
+          expect(find(p.title, text: /^Privacy Policy$/)).to be
+        end
+        within_frame(find(p.dialog_frame)) do
+          find(p.button_continue).click
+        end
+        within_frame(find(p.dialog_frame)) do
+          find(p.submit_application).click
+        end
+      end
       sleepy Sleep_lengths[:long]
       expect(find(p.title, text: /^Application Status$/)).to be
       sleep_short
