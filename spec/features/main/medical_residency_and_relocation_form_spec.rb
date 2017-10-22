@@ -16,8 +16,7 @@ describe 'student loan products' do
 
   describe "Medical Residency and relocation Sad Page 1", sad: true, loan_type: 'medical_residency', page_type: 'form' do
     it "has a form for Medical Residency and Relocation loans that is filled out Incorrectly", happy: true, loan_type: 'medical_residency' do
-      visit p.medical_residency_and_relocation_loan_form_url + visit p.medical_residency_and_relocation_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
@@ -30,13 +29,11 @@ describe 'student loan products' do
 
   describe "Medical Residency and relocation Happy All Pages", happy: true, smoke: true, loan_type: 'medical_residency', page_type: 'form' do
     it "has a form for Medical Residency and relocation student loans", smoke: true do
-      visit p.medical_residency_and_relocation_loan_form_url + visit p.medical_residency_and_relocation_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
       expect(find(p.main_form)).to be
     end
     it "has a form for Medical Residency and relocation student loans that is filled out correctly", happy: true, loan_type: 'medical_residency' do
-      visit p.medical_residency_and_relocation_loan_form_url + visit p.medical_residency_and_relocation_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       continue(p)
@@ -47,22 +44,17 @@ describe 'student loan products' do
       continue(p)
       expect(find(p.main_form)).to be
 
-      fill_in p.school, with: 'NEW YORK INSTITUTE'
+      fill_in p.school, with: 'TRINITY'
       sleep_short
       find('#' + p.school).send_keys :arrow_down
       find('#' + p.school).send_keys :tab
       select 'Doctor of Medicine', from: p.degree
       select 'MD - Dermatology', from: p.major
       select 'Full Time', from: p.enrollment_status
-#      select 'First Year Masters/Doctorate', from: p.grade_level
-#      find('#' + p.periods).send_keys :arrow_down
-#      find('#' + p.periods).send_keys :tab
       select 'Jan', from: p.graduation_date_month
       select (this_year+1), from: p.graduation_date_year
       continue(p)
       sleep_medium # Increased from short to medium to pass.  md
-#      expect(find('#' + p.copay)).to be
-#sleep 2000
       fill_in p.requested_loan, with: 10000
       fill_out_disbursement_information(p, this_year)
       continue(p)
