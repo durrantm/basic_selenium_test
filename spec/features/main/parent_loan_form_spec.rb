@@ -16,8 +16,7 @@ describe 'student loan products' do
 
   describe "Parent Sad Page 1", sad: true, loan_type: 'parent', page_type: 'form' do
     it "has a form for parent loans that is filled out Incorrectly", happy: true, loan_type: 'parent' do
-      visit p.parent_loan_form_url + p.parent_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.parent_loan_form_url, p.parent_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
@@ -30,13 +29,11 @@ describe 'student loan products' do
 
   describe "Parent Happy All Pages", happy: true, smoke: true, loan_type: 'parent', page_type: 'form' do
     it "has a form for parent student loans", smoke: true do
-      visit p.parent_loan_form_url + p.parent_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.parent_loan_form_url, p.parent_loan_form_id, p)
       expect(find(p.main_form)).to be
     end
     it "has a form for parent student loans that is filled out correctly", happy: true, loan_type: 'parent' do
-      visit p.parent_loan_form_url + p.parent_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.parent_loan_form_url, p.parent_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       select 'Parent', from: p.relationship_to_student
