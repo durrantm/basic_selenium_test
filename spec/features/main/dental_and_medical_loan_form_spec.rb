@@ -16,8 +16,7 @@ describe 'student loan products' do
 
   describe "Dental and Medical Sad Page 1", sad: true, loan_type: 'dental_and_medical', page_type: 'form' do
     it "has a form for Dental and Medical student loans that is filled out Incorrectly", happy: true, loan_type: 'dental_and_medical' do
-      visit p.dental_and_medical_loan_form_url +  p.dental_and_medical_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.dental_and_medical_loan_form_url, p.dental_and_medical_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
@@ -30,13 +29,11 @@ describe 'student loan products' do
 
   describe "Dental and Medical Happy All Pages", happy: true, smoke: true, loan_type: 'dental_and_medical', page_type: 'form' do
     it "has a form for Dental and Medical student loans", smoke: true do
-      visit p.dental_and_medical_loan_form_url +  p.dental_and_medical_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.dental_and_medical_loan_form_url, p.dental_and_medical_loan_form_id, p)
       expect(find(p.main_form)).to be
     end
     it "has a form for Dental and Medical student loans that is filled out correctly", happy: true, loan_type: 'dental_and_medical' do
-      visit p.dental_and_medical_loan_form_url +  p.dental_and_medical_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.dental_and_medical_loan_form_url, p.dental_and_medical_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       continue(p)
@@ -47,7 +44,7 @@ describe 'student loan products' do
       continue(p)
       expect(find(p.main_form)).to be
 
-      fill_in p.school, with: 'NEW YORK INSTITUTE'
+      fill_in p.school, with: 'SUNY DOWNSTATE'
       sleep_short
       find('#' + p.school).send_keys :arrow_down
       find('#' + p.school).send_keys :tab
@@ -55,8 +52,11 @@ describe 'student loan products' do
       select 'Medical', from: p.major
       select 'Full Time', from: p.enrollment_status
       select 'First Year Masters/Doctorate', from: p.grade_level
-      find('#' + p.periods).send_keys :arrow_down
-      find('#' + p.periods).send_keys :tab
+
+      select 'Jan', from: p.loan_start_month
+      select this_year, from: p.loan_start_year
+      select 'Jan', from: p.loan_end_month
+      select (this_year+1), from: p.loan_end_year
       select 'Jan', from: p.graduation_date_month
       select (this_year+2), from: p.graduation_date_year
       continue(p)
