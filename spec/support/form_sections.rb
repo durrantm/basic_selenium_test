@@ -23,6 +23,20 @@ module FormSections
     fill_in p.ssn_last_four_confirm, with: '0000'
   end
 
+  def fill_out_student_info(p)
+    fill_out_student_basic_info(p)
+    fill_out_student_ssn_and_confirm_ssn(p)
+  end
+
+  def fill_out_student_basic_info(p)
+    fill_in p.student_first_name, with: 'testFirst'
+    fill_in p.student_last_name, with: 'testLast'
+    select 'JAN', from: p.student_dob_month
+    fill_in p.student_dob_day, with: '01'
+    fill_in p.student_dob_year, with: '1996'
+    select 'US Citizen', from: 'BO_ST_Citizenship'
+  end
+
   def fill_out_student_ssn_and_confirm_ssn(p)
     fill_in p.student_SSN_first_3, with: '666'
     fill_in p.student_SSN_middle_2, with: '01'
