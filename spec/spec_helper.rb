@@ -14,6 +14,11 @@ def visit_url(environment, path, id, page)
   click_link p.apply_for_loan if PRODUCTION
 end
 
+def select_last_academic_period(page)
+  p = page
+  select all('#' + p.periods + ' option').last.text, from: p.periods
+end
+
 Capybara.configure do |config|
   config.run_server = false
   config.default_driver = :selenium

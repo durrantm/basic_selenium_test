@@ -61,8 +61,8 @@ describe 'student loan products' do
         find('#' + p.periods).send_keys :arrow_down
         find('#' + p.periods).send_keys :tab
       end
-      select 'Jan', from: 'BO_AnticipatedGradDate1'
-      select (this_year+1), from: 'BO_AnticipatedGradDate2'
+      select_last_academic_period(p) if PRODUCTION
+      fill_out_years(p, this_year)
       continue(p)
       sleep_medium # Increased from short to medium to pass.  md
 

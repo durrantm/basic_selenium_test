@@ -54,6 +54,7 @@ describe 'student loan products' do
       select 'Full Time', from: p.enrollment_status
       select 'First Year Masters/Doctorate', from: p.grade_level
       select all('#' + p.periods + ' option').last.text, from: p.periods if PRODUCTION
+      select_last_academic_period(p) if PRODUCTION
       select 'Jan', from: p.loan_start_month
       select this_year, from: p.loan_start_year
       select 'Jan', from: p.loan_end_month
