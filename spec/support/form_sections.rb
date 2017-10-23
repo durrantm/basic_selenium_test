@@ -94,11 +94,7 @@ module FormSections
   end
 
   def fill_out_loan_information(p)
-    if PRODUCTION
-      fill_in p.copay, with: '10000'
-    else
-      fill_in p.requested_loan, with: '10000'
-    end
+    fill_in p.copay, with: '10000'
     fill_in p.financial_assistance, with: '4000'
     fill_in p.loan, with: '4000'
     fill_in p.requested_loan, with: '2000'
