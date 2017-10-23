@@ -44,7 +44,7 @@ describe 'student loan products' do
       continue(p)
       expect(find(p.main_form)).to be
 
-      fill_in p.school, with: 'TRINITY'
+      fill_in p.school, with: 'SUNY'
       sleep_short
       find('#' + p.school).send_keys :arrow_down
       find('#' + p.school).send_keys :tab
