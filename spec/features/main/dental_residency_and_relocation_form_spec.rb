@@ -61,8 +61,12 @@ describe 'student loan products' do
         find('#' + p.periods).send_keys :arrow_down
         find('#' + p.periods).send_keys :tab
       end
-      select_last_academic_period(p) if PRODUCTION
-      fill_out_years(p, this_year)
+      if PRODUCTION
+        select_last_academic_period(p)
+        fill_out_years(p, this_year)
+      else
+        fill_out_graduation(p, this_year - 1)
+      end
       continue(p)
       sleep_medium # Increased from short to medium to pass.  md
 

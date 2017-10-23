@@ -72,6 +72,10 @@ module FormSections
 
   def fill_out_years(p, this_year)
     fill_out_loan_years(p, this_year)
+    fill_out_graduation(p, this_year)
+  end
+
+  def fill_out_graduation(p, this_year)
     select 'Jan', from: p.graduation_date_month
     select (this_year + 2), from: p.graduation_date_year
   end
