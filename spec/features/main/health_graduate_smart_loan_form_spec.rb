@@ -16,8 +16,7 @@ describe 'student loan products' do
 
   describe "Health Graduate Sad Page 1", sad: true, loan_type: 'health_graduate', page_type: 'form' do
     it "has a form for Health Graduate student loans that is filled out Incorrectly", happy: true, loan_type: 'health_graduate' do
-      visit p.health_graduate_loan_form_url + visit p.health_graduate_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.health_graduate_loan_form_url, p.health_graduate_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
@@ -30,13 +29,11 @@ describe 'student loan products' do
 
   describe "Health Graduate Happy All Pages", happy: true, smoke: true, loan_type: 'health_graduate', page_type: 'form' do
     it "has a form for Health Graduate student loans", smoke: true do
-      visit p.health_graduate_loan_form_url + visit p.health_graduate_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.health_graduate_loan_form_url, p.health_graduate_loan_form_id, p)
       expect(find(p.main_form)).to be
     end
     it "has a form for Health Graduate student loans that is filled out correctly", happy: true, loan_type: 'health_graduate' do
-      visit p.health_graduate_loan_form_url + visit p.health_graduate_loan_form_id
-      click_link p.apply_for_loan
+      visit_url(TEST_ENVIRONMENT, p.health_graduate_loan_form_url, p.health_graduate_loan_form_id, p)
       sleep_short
       fill_out_basic_information_form(p,d)
       continue(p)
