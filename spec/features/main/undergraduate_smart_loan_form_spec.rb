@@ -47,8 +47,7 @@ describe 'student loan products' do
       sleep_short
       fill_in p.school, with: 'TRINITY'
       sleep_short
-      find('#' + p.school).send_keys :arrow_down
-      find('#' + p.school).send_keys :tab
+      send_keys_select_school(p)
       fill_out_education_degree_information(p, this_year, major='Business')
       continue(p)
       sleep_medium # Increased from short to medium to pass.  md
