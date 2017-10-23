@@ -2,12 +2,14 @@ require 'rspec'
 require 'capybara/rspec'
 require 'capybara/dsl'
 require 'selenium-webdriver'
-TEST_ENVIRONMENT='JV2'
+#TEST_ENVIRONMENT='JV2'
+TEST_ENVIRONMENT='production'
 PRODUCTION = (TEST_ENVIRONMENT == 'production' ? true : false)
 JV2 = (TEST_ENVIRONMENT == 'JV2' ? true : false)
 
 def visit_url(environment, path, id, page)
-  local_path = (environment == 'production' ? path : '?NavPoint=APPLY&')
+  p = page
+  local_path = (environment == 'production' ? (path + '?') : '?NavPoint=APPLY&')
   visit local_path + id
   click_link p.apply_for_loan if PRODUCTION
 end

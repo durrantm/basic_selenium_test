@@ -14,17 +14,17 @@ describe 'student loan products' do
   p = PageObject.new
   d = FormDataObject.new
 
-  def go_to_loan_application_form(page)
-    p = page
-    visit_url(TEST_ENVIRONMENT, p.bar_study_loan_form_url, p.bar_study_loan_form_id, p)
+#  def go_to_loan_application_form(page)
+#    p = page
+#    visit_url(TEST_ENVIRONMENT, p.bar_study_loan_form_url, p.bar_study_loan_form_id, p)
 #    if TEST_ENVIRONMENT == 'production'
 #      visit p.bar_study_loan_form_url + p.bar_study_loan_form_id
 #    else
 #      visit '?NavPoint=APPLY&'+ p.bar_study_loan_form_id
 #    end
-    sleep_short
-    click_on('Apply for this loan') if TEST_ENVIRONMENT == 'production'
-  end
+#    sleep_short
+#    click_on('Apply for this loan') if TEST_ENVIRONMENT == 'production'
+#  end
 
   describe "Bar Study Sad Page 1", sad: true, loan_type: 'bar', page_type: 'form' do
     it "has a form for Bar Study student loans that is filled out Incorrectly", happy: true, loan_type: 'graduate' do
@@ -49,16 +49,11 @@ describe 'student loan products' do
       continue(p)
       sleep_medium # Increased from short to medium to medium_long to pass.  md
       expect(find(p.address_info)).to be
-
       fill_out_demographics(p)
       continue(p)
       expect(find(p.main_form)).to be
-
       sleep_short
-      fill_in p.school, with: 'NEW YORK LAW SCHOOL, NEW YORK, NY, 00278300'
-      fill_in p.school, with: 'DRAKE' unless PRODUCTION
-      #todo refactor above 2 lines as more cases appear
-
+      fill_in p.school, with: 'DRAKE'
       sleep_short
       find('#' + p.school).send_keys :arrow_down
       find('#' + p.school).send_keys :tab
