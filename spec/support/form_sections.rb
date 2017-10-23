@@ -94,7 +94,11 @@ module FormSections
   end
 
   def fill_out_loan_information(p)
-    fill_in p.copay, with: '10000'
+    if PRODUCTION
+      fill_in p.copay, with: '10000'
+    else
+      fill_in p.requested_loan, with: '10000'
+    end
     fill_in p.financial_assistance, with: '4000'
     fill_in p.loan, with: '4000'
     fill_in p.requested_loan, with: '2000'
@@ -157,12 +161,20 @@ module FormSections
     end
   end
 
-  def submit_application(p)
+  def electronic_consent(p)
     within_frame(find(p.dialog_frame)) do
       find(p.electronic_consent).click
     end
+  end
+
+  def submit_application(p)
+    electronic_consent(p)
     sleep_short
     accept_dialogs(p)
+    click_submit_application(p)
+  end
+
+  def click_submit_application(p)
     within_frame(find(p.dialog_frame)) do
       find(p.submit_application).click
     end
@@ -170,6 +182,12 @@ module FormSections
 
   def continue(p)
     find(p.continue).click
+  end
+
+  def continue_in_dialog_frame(p)
+    within_frame(find(p.dialog_frame)) do
+      find(p.button_continue).click
+    end
   end
 end
 

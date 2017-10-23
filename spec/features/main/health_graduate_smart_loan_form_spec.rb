@@ -43,21 +43,35 @@ describe 'student loan products' do
       fill_out_demographics(p)
       continue(p)
       expect(find(p.main_form)).to be
-
-      fill_in p.school, with: 'PACIFIC NEW YORK'
+      fill_in p.school, with: 'TRINITY'
       sleep_short
       find('#' + p.school).send_keys :arrow_down
       find('#' + p.school).send_keys :tab
-      select 'Masters', from: p.degree
-      select 'Other', from: p.major
+      sleep_short
+      if PRODUCTION
+        select 'Masters', from: p.degree
+        select 'Nursing', from: p.major
+        select 'First Year Masters/Doctorate', from: p.grade_level
+        select 'Provide your own', from: p.periods
+        fill_out_loan_years(p, this_year)
+      else
+        select 'Doctor of Medicine', from: p.degree
+        select 'MD - Dermatology', from: p.major
+      end
       select 'Full Time', from: p.enrollment_status
-      select 'First Year Masters/Doctorate', from: p.grade_level
-      fill_out_years(p, this_year)
+      if PRODUCTION
+        fill_out_years(p, this_year)
+      else
+        fill_out_graduation(p, this_year-1)
+      end
       continue(p)
-      sleep_medium # Increased from short to medium to pass.  md
-      expect(find('#' + p.copay)).to be
-
-      fill_out_loan_information(p)
+      sleep_medium
+      if PRODUCTION
+        fill_out_loan_information(p)
+      else
+        fill_in p.requested_loan, with: '10000'
+        fill_out_disbursement_information(p, this_year)
+      end
       continue(p)
       sleep_short
       expect(find '#' + p.employment_status).to be
@@ -80,9 +94,13 @@ describe 'student loan products' do
       continue(p)
       sleep_short
       expect(find p.dialog_frame).to be
-
-      submit_application(p)
-
+      if PRODUCTION
+        submit_application(p)
+      else
+        electronic_consent(p)
+        continue_in_dialog_frame(p)
+        click_submit_application(p)
+      end
       sleepy Sleep_lengths[:long]
       expect(find(p.title, text: /^Application Status$/)).to be
       sleep_short
