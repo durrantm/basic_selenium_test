@@ -41,9 +41,9 @@ module FormSections
     select '10', from: p.years_there
   end
 
-  def fill_out_education_degree_information(p, this_year)
+  def fill_out_education_degree_information(p, this_year, major='Law and Law Studies')
     select 'Bachelors', from: p.degree
-    select 'Law and Law Studies', from: p.major
+    select major, from: p.major
     select 'Full Time', from: p.enrollment_status
     select 'First Year Masters/Doctorate', from: p.grade_level
     fill_out_years(p, this_year)

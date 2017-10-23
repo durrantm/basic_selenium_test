@@ -49,7 +49,7 @@ describe 'student loan products' do
       sleep_short
       find('#' + p.school).send_keys :arrow_down
       find('#' + p.school).send_keys :tab
-      fill_out_education_degree_information(p, this_year)
+      fill_out_education_degree_information(p, this_year, major='Other')
       continue(p)
       sleep_medium # Increased from short to medium to pass.  md
       expect(find('#' + p.copay)).to be
