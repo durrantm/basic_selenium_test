@@ -44,15 +44,16 @@ describe 'student loan products' do
       continue(p)
       expect(find(p.main_form)).to be
 
-      fill_in p.school, with: 'SUNY DOWNSTATE'
+      fill_in p.school, with: 'SUNY'
       sleep_short
       find('#' + p.school).send_keys :arrow_down
       find('#' + p.school).send_keys :tab
+      sleep_short
       select 'Doctor of Medicine', from: p.degree
       select 'Medical', from: p.major
       select 'Full Time', from: p.enrollment_status
       select 'First Year Masters/Doctorate', from: p.grade_level
-
+      select all('#' + p.periods + ' option').last.text, from: p.periods if PRODUCTION
       select 'Jan', from: p.loan_start_month
       select this_year, from: p.loan_start_year
       select 'Jan', from: p.loan_end_month
