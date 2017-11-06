@@ -2,12 +2,20 @@ require 'rspec'
 require 'capybara/rspec'
 require 'capybara/dsl'
 require 'selenium-webdriver'
+require 'yaml'
 
 TEST_ENVIRONMENT='JV2'
 #TEST_ENVIRONMENT='production'
 
 PRODUCTION = (TEST_ENVIRONMENT == 'production' ? true : false)
 JV2 = (TEST_ENVIRONMENT == 'JV2' ? true : false)
+
+require_relative 'support/page_object'
+require_relative 'support/form_data_object'
+require_relative 'support/sleep_lengths'
+require_relative 'support/sleepers'
+require_relative 'support/form_helpers'
+require_relative 'support/form_sections'
 
 def visit_url(environment, path, id, page)
   p = page

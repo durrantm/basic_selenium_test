@@ -1,12 +1,3 @@
-require 'yaml'
-require 'spec_helper'
-require_relative '../../support/page_object'
-require_relative '../../support/form_data_object'
-require_relative '../../support/sleep_lengths'
-require_relative '../../support/sleepers'
-require_relative '../../support/form_helpers'
-require_relative '../../support/form_sections'
-
 describe 'K12 loan products' do
   include Sleepers
   include FormHelpers

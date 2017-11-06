@@ -1,30 +1,9 @@
-require 'yaml'
-require 'spec_helper'
-require_relative '../../support/page_object'
-require_relative '../../support/form_data_object'
-require_relative '../../support/sleep_lengths'
-require_relative '../../support/sleepers'
-require_relative '../../support/form_helpers'
-require_relative '../../support/form_sections'
-
 describe 'student loan products' do
   include Sleepers
   include FormHelpers
   include FormSections
   p = PageObject.new
   d = FormDataObject.new
-
-#  def go_to_loan_application_form(page)
-#    p = page
-#    visit_url(TEST_ENVIRONMENT, p.bar_study_loan_form_url, p.bar_study_loan_form_id, p)
-#    if TEST_ENVIRONMENT == 'production'
-#      visit p.bar_study_loan_form_url + p.bar_study_loan_form_id
-#    else
-#      visit '?NavPoint=APPLY&'+ p.bar_study_loan_form_id
-#    end
-#    sleep_short
-#    click_on('Apply for this loan') if TEST_ENVIRONMENT == 'production'
-#  end
 
   describe "Bar Study Sad Page 1", sad: true, loan_type: 'bar', page_type: 'form' do
     it "has a form for Bar Study student loans that is filled out Incorrectly", happy: true, loan_type: 'graduate' do
