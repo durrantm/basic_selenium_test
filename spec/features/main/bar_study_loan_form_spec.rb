@@ -32,6 +32,8 @@ describe 'student loan products' do
       continue(p)
       expect(find(p.main_form)).to be
       sleep_short
+      # The following section varies by school and other factors.  I prefer to keep the form data used HERE in the code
+      # Abstracting away into a table or data store of some sort may seem attractive but adds bad abstraction from my experience
       fill_in p.school, with: 'DRAKE'
       sleep_short
       find('#' + p.school).send_keys :arrow_down
