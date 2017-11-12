@@ -33,10 +33,10 @@ describe 'student loan products' do
       wait_to_see_short { find_by_id p.school }
       fill_out_school(p, 'Trinity')
       wait_for_ajax
-      find_by_id p.degree
+      find_by_id p.degree, wait:Sleep_lengths[:medium]
       fill_out_education_degree_information(p, this_year, major='Other')
       continue(p)
-      wait_to_see_medium { find_by_id p.copay }
+      find_by_id p.copay, wait:Sleep_lengths[:medium]
       fill_out_loan_information(p)
       continue(p)
       wait_to_see_short { find_by_id p.employment_status }
@@ -50,7 +50,7 @@ describe 'student loan products' do
       wait_to_see_short { find_by_id p.primary_contact_first_name }
       fill_out_contact_information(p)
       continue(p)
-      wait_to_see_medium { first '#' + p.how_to_apply }
+      first '#' + p.how_to_apply, wait:Sleep_lengths[:medium]
       choose p.how_to_apply, option: 'I'
       continue(p)
       wait_to_see_short { first p.dialog_frame }

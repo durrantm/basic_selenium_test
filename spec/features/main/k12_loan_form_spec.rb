@@ -43,10 +43,10 @@ describe 'K12 loan products' do
       fill_out_student_ssn_and_confirm_ssn(p)
       fill_out_school(p, "NEW YORK MILITARY")
       wait_for_ajax
-      find_by_id p.grade_level
+      find_by_id p.grade_level, wait:Sleep_lengths[:medium]
       select 'Kindergarten', from: p.grade_level
       continue(p)
-      wait_to_see_medium { find_by_id p.requested_loan }
+      find_by_id p.requested_loan, wait:Sleep_lengths[:medium]
       fill_in p.requested_loan, with: '4000'
       continue(p)
       wait_to_see_short { find_by_id p.employment_status }
@@ -60,7 +60,7 @@ describe 'K12 loan products' do
       wait_to_see_short { find_by_id p.primary_contact_first_name }
       fill_out_contact_information(p)
       continue(p)
-      wait_to_see_medium { first '#' + p.how_to_apply }
+      first '#' + p.how_to_apply, wait:Sleep_lengths[:medium]
       choose p.how_to_apply, option: 'I'
       continue(p)
       wait_to_see_short { find p.dialog_frame }

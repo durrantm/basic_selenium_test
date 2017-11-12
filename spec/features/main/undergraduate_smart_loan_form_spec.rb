@@ -31,13 +31,13 @@ describe 'student loan products' do
       continue(p)
       fill_out_address(p)
       continue(p)
-      expect(find(p.main_form)).to be
-      wait_to_see_short { find_by_id p.school }
+      find_by_id p.school, wait:Sleep_length[:medium]
       fill_out_school(p, 'TRINITY')
       wait_for_ajax
+      find_by_id p.degree, wait:Sleep_lengths[:medium]
       fill_out_education_degree_information(p, this_year, major='Business')
       continue(p)
-      wait_to_see_medium { find_by_id p.copay }
+      find_by_id p.copay, wait:Sleep_lengths[:medium]
       fill_out_loan_information(p)
       continue(p)
       wait_to_see_short { find_by_id p.employment_status }
@@ -51,7 +51,7 @@ describe 'student loan products' do
       wait_to_see_short { find_by_id p.primary_contact_first_name }
       fill_out_contact_information(p)
       continue(p)
-      wait_to_see_medium { first '#' + p.how_to_apply }
+      first '#' + p.how_to_apply, wait:Sleep_lengths[:medium]
       choose p.how_to_apply, option: 'I'
       continue(p)
       wait_to_see_short { find p.dialog_frame }

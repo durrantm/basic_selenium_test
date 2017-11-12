@@ -33,7 +33,7 @@ describe 'student loan products' do
       continue(p)
       fill_out_school(p, 'DRAKE')
       wait_for_ajax
-      find_by_id p.degree
+      find_by_id p.degree, wait:Sleep_lengths[:medium]
       select 'Juris Doctor (JD)', from: p.degree
       select 'Full Time', from: p.enrollment_status
       select 'Jan', from: p.graduation_date_month
@@ -41,7 +41,7 @@ describe 'student loan products' do
       select 'Jan', from: p.exam_date_month
       select this_year, from: p.exam_date_year
       continue(p)
-      wait_to_see_medium { find_by_id p.requested_loan }
+      find_by_id p.requested_loan, wait: Sleep_lengths[:medium]
       fill_in p.requested_loan, with: 10000
       fill_out_disbursement_information(p, this_year)
       continue(p)
@@ -51,10 +51,10 @@ describe 'student loan products' do
       continue(p)
       fill_out_contact_information(p)
       continue(p)
-      wait_to_see_medium { first '#' + p.how_to_apply }
+      first '#' + p.how_to_apply, wait: Sleep_lengths[:medium]
       choose p.how_to_apply, option: 'I'
       continue(p)
-      wait_to_see_medium { find p.dialog_frame }
+      find p.dialog_frame, wait: Sleep_lengths[:medium]
       within_frame(find(p.dialog_frame)) do
         find(p.electronic_consent).click
       end
@@ -62,6 +62,7 @@ describe 'student loan products' do
       within_frame(find(p.dialog_frame)) do
         find(p.button_continue).click
       end
+      find(p.dialog_frame)
       within_frame(find(p.dialog_frame)) do
         find(p.submit_application).click
       end

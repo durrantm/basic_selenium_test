@@ -34,7 +34,7 @@ describe 'student loan products' do
       wait_to_see_short { find_by_id p.school }
       fill_out_school(p, 'TRINITY')
       wait_for_ajax
-      find_by_id p.degree
+      find_by_id p.degree, wait:Sleep_lengths[:medium]
       if PRODUCTION
         select 'Doctor of Medicine', from: p.degree
         select 'Medical', from: p.major
@@ -72,7 +72,7 @@ describe 'student loan products' do
       wait_to_see_short { find_by_id p.primary_contact_first_name }
       fill_out_contact_information(p)
       continue(p)
-      wait_to_see_medium { first '#' + p.how_to_apply }
+      first '#' + p.how_to_apply, wait: Sleep_lengths[:medium]
       choose p.how_to_apply, option: 'I'
       continue(p)
       wait_to_see_short { find p.dialog_frame }

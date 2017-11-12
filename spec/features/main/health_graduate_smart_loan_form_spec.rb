@@ -33,7 +33,7 @@ describe 'student loan products' do
       continue(p)
       fill_out_school(p, 'TRINITY')
       wait_for_ajax
-      find_by_id p.degree
+      find_by_id p.degree, wait:Sleep_lengths[:medium]
       if PRODUCTION
         select 'Masters', from: p.degree
         select 'Nursing', from: p.major
@@ -52,10 +52,10 @@ describe 'student loan products' do
       end
       continue(p)
       if PRODUCTION
-        wait_to_see_medium { find_by_id p.copay }
+        find_by_id p.copay, wait:Sleep_lengths[:medium]
         fill_out_loan_information(p)
       else
-        wait_to_see_short { find_by_id p.requested_loan }
+        find_by_id p.requested_loan, wait:Sleep_lengths[:medium]
         fill_in p.requested_loan, with: '10000'
         fill_out_disbursement_information(p, this_year)
       end
@@ -71,7 +71,7 @@ describe 'student loan products' do
       wait_to_see_short { find_by_id p.primary_contact_first_name }
       fill_out_contact_information(p)
       continue(p)
-      wait_to_see_medium { first '#' + p.how_to_apply }
+      first '#' + p.how_to_apply, wait:Sleep_lengths[:medium]
       choose p.how_to_apply, option: 'I'
       continue(p)
       wait_to_see_short { find p.dialog_frame }

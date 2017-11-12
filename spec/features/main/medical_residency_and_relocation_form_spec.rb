@@ -34,14 +34,14 @@ describe 'student loan products' do
       wait_to_see_short { find '#' + p.school }
       fill_out_school(p, 'TRINITY')
       wait_for_ajax
-      find_by_id p.degree
+      find_by_id p.degree, wait:Sleep_lengths[:medium]
       select 'Doctor of Medicine', from: p.degree
       select 'MD - Dermatology', from: p.major
       select 'Full Time', from: p.enrollment_status
       select 'Jan', from: p.graduation_date_month
       select (this_year+1), from: p.graduation_date_year
       continue(p)
-      wait_to_see_medium { find_by_id p.requested_loan }
+      find_by_id p.requested_loan, wait:Sleep_lengths[:medium]
       fill_in p.requested_loan, with: 10000
       fill_out_disbursement_information(p, this_year)
       continue(p)
@@ -56,7 +56,7 @@ describe 'student loan products' do
       wait_to_see_short { find_by_id p.primary_contact_first_name }
       fill_out_contact_information(p)
       continue(p)
-      wait_to_see_medium { first '#' + p.how_to_apply }
+      first '#' + p.how_to_apply, wait:Sleep_lengths[:medium]
       choose p.how_to_apply, option: 'I'
       continue(p)
       wait_to_see_short { find p.dialog_frame }
