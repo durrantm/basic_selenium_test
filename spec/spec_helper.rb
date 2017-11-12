@@ -16,6 +16,7 @@ require_relative 'support/sleep_lengths'
 require_relative 'support/sleepers'
 require_relative 'support/form_helpers'
 require_relative 'support/form_sections'
+require_relative 'support/wait_for_ajax'
 
 def visit_url(environment, path, id, page)
   p = page

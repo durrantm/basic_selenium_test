@@ -8,4 +8,13 @@ module Sleepers
   def sleep_medium
   	sleep Sleep_lengths[:medium]
   end
+  def wait_to_see_short(&code)
+    wait = Selenium::WebDriver::Wait.new(:timeout => sleep_short)
+    wait.until { yield }
+  end
+  def wait_to_see_medium(&code)
+    sleep 1
+    wait = Selenium::WebDriver::Wait.new(:timeout => sleep_medium)
+    wait.until { yield }
+  end
 end

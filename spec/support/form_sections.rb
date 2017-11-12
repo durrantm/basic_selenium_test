@@ -1,7 +1,8 @@
 module FormSections
 
-  def fill_out_basic_information_form(page, data)
-    p,d = page, data
+  def fill_out_basic_information_form(form_page, data)
+    p,d = form_page, data
+    wait_to_see_medium { find '#' + p.first_name }
     fill_in p.first_name, with: 'testFirst'
     fill_in p.middle_initial, with: 't'
     fill_in p.last_name, with: 'testLast'
@@ -46,7 +47,8 @@ module FormSections
     fill_in p.student_SSN_last_4_confirm, with: '0000'
   end
 
-  def fill_out_demographics(p)
+  def fill_out_address(p)
+    wait_to_see_medium { find '#' + p.street_address }
     fill_in p.street_address, with: '1 main st'
     fill_in p.street_address_2, with: 'Apt#1'
     fill_in p.city, with: 'New York'
@@ -81,6 +83,7 @@ module FormSections
   end
 
   def fill_out_education_certificate_information(p, this_year)
+    find '#' + p.degree
     select 'Certificate', from: p.degree
     select 'Law and Law Studies', from: p.major
     select 'Full Time', from: p.enrollment_status
@@ -101,6 +104,7 @@ module FormSections
   end
 
   def fill_out_employment_information(p)
+    wait_to_see_short { find '#' + p.employment_status, visible: true }
     select 'Employed PT', from: p.employment_status
     find(p.continue).click
     fill_in p.employer, with: 'test inc'
@@ -112,12 +116,16 @@ module FormSections
   end
 
   def fill_out_financial_information(p)
+    wait_to_see_short { find '#' + p.checking_account, visible: true }
+    check p.checking_account
+    find '#' + p.checking_amount, visible: true
     fill_in p.checking_amount, with: '1000'
     select 'Own', from: p.residence_type
     fill_in p.mortgage_rent, with: 1000
   end
 
   def fill_out_contact_information(p)
+    wait_to_see_short { find "input##{p.primary_contact_first_name}", visible: true }
     fill_in p.primary_contact_first_name, with: 'testMomFirst'
     fill_in p.primary_contact_last_name, with: 'testMomLast'
     fill_in p.primary_contact_phone, with: '6175551212'
@@ -137,6 +145,14 @@ module FormSections
     select (this_year+1), from: p.disbursement_date_2_year
     fill_in p.disbursement_amount_1, with: 5000
     fill_in p.disbursement_amount_2, with: 5000
+  end
+
+  def fill_out_school(p, school)
+    wait_to_see_short { find '#' + p.school, visible: true }
+    fill_in p.school, with: school
+    sleep_short
+    find('#' + p.school).send_keys :arrow_down
+    find('#' + p.school).send_keys :tab
   end
 
   def accept_dialogs(p)

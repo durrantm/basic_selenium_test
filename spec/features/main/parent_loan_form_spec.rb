@@ -2,13 +2,14 @@ describe 'student loan products' do
   include Sleepers
   include FormHelpers
   include FormSections
+  include WaitForAjax
+
   p = PageObject.new
   d = FormDataObject.new
 
   describe "Parent Sad Page 1", sad: true, loan_type: 'parent', page_type: 'form' do
     it "has a form for parent loans that is filled out Incorrectly", happy: true, loan_type: 'parent' do
       visit_url(TEST_ENVIRONMENT, p.parent_loan_form_url, p.parent_loan_form_id, p)
-      sleep_short
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
       continue(p)
@@ -25,45 +26,33 @@ describe 'student loan products' do
     end
     it "has a form for parent student loans that is filled out correctly", happy: true, loan_type: 'parent' do
       visit_url(TEST_ENVIRONMENT, p.parent_loan_form_url, p.parent_loan_form_id, p)
-      sleep_short
       fill_out_basic_information_form(p,d)
       select 'Parent', from: p.relationship_to_student
       continue(p)
-      sleep_medium # Increased from short to medium to to pass.  md
-      expect(find(p.address_info)).to be
-
-      fill_out_demographics(p)
+      fill_out_address(p)
       continue(p)
-      expect(find(p.main_form)).to be
-
-      sleep_short
+      wait_to_see_short { find p.main_form }
       fill_out_student_info(p)
-
-      fill_in p.school, with: 'NEW YORK LAW SCHOOL, NEW YORK, NY, 00278300'
-      sleep_short
-      find('#' + p.school).send_keys :arrow_down
-      find('#' + p.school).send_keys :tab
+      fill_out_school(p, 'NEW YORK LAW SCHOOL, NEW YORK, NY, 00278300')
+      wait_for_ajax
+      find '#' + p.degree
       fill_out_education_degree_information(p, this_year)
       continue(p)
-      sleep_medium # Increased from short to medium to pass.  md
-
+      wait_to_see_medium { find '#' + p.copay }
       fill_out_loan_information(p)
       continue(p)
-      sleep_short
-      expect(find '#' + p.employment_status).to be
-
+      wait_to_see_short { find '#' + p.employment_status }
       fill_out_employment_information(p)
       continue(p)
-      sleep_short
-
-      check(p.checking_account)
-      expect(find '#' + p.checking_amount).to be
-
+      wait_to_see_short { find '#' + p.checking_account }
+      check p.checking_account
+      find '#' + p.checking_amount
       fill_out_financial_information(p)
       continue(p)
+      wait_to_see_medium { first '#' + p.how_to_apply }
       choose p.how_to_apply, option: 'I'
       continue(p)
-      sleep_short
+      wait_to_see_short { find p.dialog_frame }
       within_frame(find(p.dialog_frame)) do
         first('input#rdoStudentDependentConfirmation').click
       end
