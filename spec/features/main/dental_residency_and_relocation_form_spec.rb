@@ -53,7 +53,7 @@ describe 'student loan products' do
         fill_out_graduation(p, this_year - 1)
       end
       continue(p)
-      sleep_medium # Increased from short to medium to pass.  md
+      find p.requested_loan, wait:Sleep_lengths[:medium]
       if PRODUCTION
         fill_out_loan_information(p)
       else
