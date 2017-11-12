@@ -12,9 +12,9 @@ describe 'K12 loan products' do
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
       continue(p)
-      expect(find('#' + p.first_name).value).to eq ''
-      expect(find('#' + p.last_name).value).to eq 'testLast'
-      expect(find('#' + p.email_address).value).to eq d.email
+      expect(find_by_id(p.first_name).value).to eq ''
+      expect(find_by_id(p.last_name).value).to eq 'testLast'
+      expect(find_by_id(p.email_address).value).to eq d.email
       # TODO add expects for other values that were entered
     end
   end
@@ -22,6 +22,7 @@ describe 'K12 loan products' do
   describe "K12 Training Happy All Pages", happy: true, smoke: true, loan_type: 'k12', page_type: 'form' do
     it "has a form for k12 training student loans", smoke: true, loan_type: 'k12' do
       visit_url(TEST_ENVIRONMENT, p.k12_loan_form_url, p.k12_loan_form_id, p)
+      find p.main_form, visible: true
       expect(find(p.main_form)).to be
     end
     it "has a form for K12 student loans that is filled out correctly", happy: true, loan_type: 'k12' do
@@ -32,7 +33,7 @@ describe 'K12 loan products' do
       continue(p)
       fill_out_address(p)
       continue(p)
-      wait_to_see_short { find '#' + p.student_first_name }
+      wait_to_see_short { find_by_id p.student_first_name }
       fill_in p.student_first_name, with: 'testfirst'
       fill_in p.student_first_name, with: 'testfirst'
       fill_in p.student_last_name, with: 'testLast'
@@ -42,21 +43,21 @@ describe 'K12 loan products' do
       fill_out_student_ssn_and_confirm_ssn(p)
       fill_out_school(p, "NEW YORK MILITARY")
       wait_for_ajax
-      find '#' + p.grade_level
+      find_by_id p.grade_level
       select 'Kindergarten', from: p.grade_level
       continue(p)
-      wait_to_see_medium { find '#' + p.requested_loan }
+      wait_to_see_medium { find_by_id p.requested_loan }
       fill_in p.requested_loan, with: '4000'
       continue(p)
-      wait_to_see_short { find '#' + p.employment_status }
+      wait_to_see_short { find_by_id p.employment_status }
       fill_out_employment_information(p)
       continue(p)
-      wait_to_see_short { find '#' + p.checking_account }
+      wait_to_see_short { find_by_id p.checking_account }
       check(p.checking_account)
-      wait_to_see_short { find '#' + p.checking_amount }
+      wait_to_see_short { find_by_id p.checking_amount }
       fill_out_financial_information(p)
       continue(p)
-      wait_to_see_short { find '#' + p.primary_contact_first_name }
+      wait_to_see_short { find_by_id p.primary_contact_first_name }
       fill_out_contact_information(p)
       continue(p)
       wait_to_see_medium { first '#' + p.how_to_apply }

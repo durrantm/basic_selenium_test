@@ -13,15 +13,16 @@ describe 'student loan products' do
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
       continue(p)
-      expect(find('#' + p.first_name).value).to eq ''
-      expect(find('#' + p.last_name).value).to eq 'testLast'
-      expect(find('#' + p.email_address).value).to eq d.email
+      expect(find_by_id(p.first_name).value).to eq ''
+      expect(find_by_id(p.last_name).value).to eq 'testLast'
+      expect(find_by_id(p.email_address).value).to eq d.email
     end
   end
 
   describe "Parent Happy All Pages", happy: true, smoke: true, loan_type: 'parent', page_type: 'form' do
     it "has a form for parent student loans", smoke: true do
       visit_url(TEST_ENVIRONMENT, p.parent_loan_form_url, p.parent_loan_form_id, p)
+      find p.main_form, visible: true
       expect(find(p.main_form)).to be
     end
     it "has a form for parent student loans that is filled out correctly", happy: true, loan_type: 'parent' do
@@ -35,18 +36,18 @@ describe 'student loan products' do
       fill_out_student_info(p)
       fill_out_school(p, 'NEW YORK LAW SCHOOL, NEW YORK, NY, 00278300')
       wait_for_ajax
-      find '#' + p.degree
+      find_by_id p.degree
       fill_out_education_degree_information(p, this_year)
       continue(p)
-      wait_to_see_medium { find '#' + p.copay }
+      wait_to_see_medium { find_by_id p.copay }
       fill_out_loan_information(p)
       continue(p)
-      wait_to_see_short { find '#' + p.employment_status }
+      wait_to_see_short { find_by_id p.employment_status }
       fill_out_employment_information(p)
       continue(p)
-      wait_to_see_short { find '#' + p.checking_account }
+      wait_to_see_short { find_by_id p.checking_account }
       check p.checking_account
-      find '#' + p.checking_amount
+      find_by_id p.checking_amount
       fill_out_financial_information(p)
       continue(p)
       wait_to_see_medium { first '#' + p.how_to_apply }

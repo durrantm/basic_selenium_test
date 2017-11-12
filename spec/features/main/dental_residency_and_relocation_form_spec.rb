@@ -13,15 +13,16 @@ describe 'student loan products' do
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
       continue(p)
-      expect(find('#' + p.first_name).value).to eq ''
-      expect(find('#' + p.last_name).value).to eq 'testLast'
-      expect(find('#' + p.email_address).value).to eq d.email
+      expect(find_by_id(p.first_name).value).to eq ''
+      expect(find_by_id(p.last_name).value).to eq 'testLast'
+      expect(find_by_id(p.email_address).value).to eq d.email
     end
   end
 
   describe "Dental Residency and relocation Happy All Pages", happy: true, smoke: true, loan_type: 'dental_residency', page_type: 'form' do
     it "has a form for Dental Residency and relocation student loans", smoke: true do
       visit_url(TEST_ENVIRONMENT, p.dental_residency_and_relocation_loan_form_url, p.dental_residency_and_relocation_loan_form_id, p)
+      find p.main_form, visible: true
       expect(find(p.main_form)).to be
     end
     it "has a form for Dental Residency and relocation student loans that is filled out correctly", happy: true, loan_type: 'dental_residency' do
@@ -30,10 +31,10 @@ describe 'student loan products' do
       continue(p)
       fill_out_address(p)
       continue(p)
-      wait_to_see_short { find '#' + p.school }
+      wait_to_see_short { find_by_id p.school }
       fill_out_school(p, 'TRINITY')
       wait_for_ajax
-      find p.degree
+      find_by_id p.degree
       if PRODUCTION
         select 'Doctor of Medicine', from: p.degree
         select 'Medical', from: p.major
@@ -44,8 +45,8 @@ describe 'student loan products' do
       select 'Full Time', from: p.enrollment_status
       if PRODUCTION
         select 'First Year Masters/Doctorate', from: p.grade_level
-        find('#' + p.periods).send_keys :arrow_down
-        find('#' + p.periods).send_keys :tab
+        find_by_id(p.periods).send_keys :arrow_down
+        find_by_id(p.periods).send_keys :tab
         select_last_academic_period(p)
         fill_out_years(p, this_year)
       else
@@ -60,15 +61,15 @@ describe 'student loan products' do
         fill_out_disbursement_information(p, this_year)
       end
       continue(p)
-      wait_to_see_short { find '#' + p.employment_status }
+      wait_to_see_short { find_by_id p.employment_status }
       fill_out_employment_information(p)
       continue(p)
-      wait_to_see_short { find '#' + p.checking_account }
+      wait_to_see_short { find_by_id p.checking_account }
       check(p.checking_account)
-      wait_to_see_short { find '#' + p.checking_amount }
+      wait_to_see_short { find_by_id p.checking_amount }
       fill_out_financial_information(p)
       continue(p)
-      wait_to_see_short { find '#' + p.primary_contact_first_name }
+      wait_to_see_short { find_by_id p.primary_contact_first_name }
       fill_out_contact_information(p)
       continue(p)
       wait_to_see_medium { first '#' + p.how_to_apply }
