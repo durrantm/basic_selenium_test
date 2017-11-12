@@ -157,7 +157,7 @@ module FormSections
   end
 
   def choose_individual_application(p)
-    first '#' + p.how_to_apply, visible:true, wait:Sleep_lengths[:medium]
+    find 'input#' + p.how_to_apply_individual, visible: true
     choose p.how_to_apply, option: 'I'
     continue(p)
   end
