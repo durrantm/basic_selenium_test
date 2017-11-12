@@ -156,6 +156,12 @@ module FormSections
     find_by_id(p.school).send_keys :tab
   end
 
+  def choose_individual_application(p)
+    first '#' + p.how_to_apply, visible:true, wait:Sleep_lengths[:medium]
+    choose p.how_to_apply, option: 'I'
+    continue(p)
+  end
+
   def accept_dialogs(p)
     within_frame(find(p.dialog_frame)) do
       expect(find(p.title, text: /^Information.*Rates.*Fees$/)).to be

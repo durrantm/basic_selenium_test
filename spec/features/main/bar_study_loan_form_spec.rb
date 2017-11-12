@@ -51,9 +51,7 @@ describe 'student loan products' do
       continue(p)
       fill_out_contact_information(p)
       continue(p)
-      first '#' + p.how_to_apply, wait: Sleep_lengths[:medium]
-      choose p.how_to_apply, option: 'I'
-      continue(p)
+      choose_individual_application(p)
       find p.dialog_frame, wait: Sleep_lengths[:medium]
       within_frame(find(p.dialog_frame)) do
         find(p.electronic_consent).click

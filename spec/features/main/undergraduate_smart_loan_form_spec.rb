@@ -31,7 +31,7 @@ describe 'student loan products' do
       continue(p)
       fill_out_address(p)
       continue(p)
-      find_by_id p.school, wait:Sleep_length[:medium]
+      find_by_id p.school, wait:Sleep_lengths[:medium]
       fill_out_school(p, 'TRINITY')
       wait_for_ajax
       find_by_id p.degree, wait:Sleep_lengths[:medium]
@@ -51,9 +51,7 @@ describe 'student loan products' do
       wait_to_see_short { find_by_id p.primary_contact_first_name }
       fill_out_contact_information(p)
       continue(p)
-      first '#' + p.how_to_apply, wait:Sleep_lengths[:medium]
-      choose p.how_to_apply, option: 'I'
-      continue(p)
+      choose_individual_application(p)
       wait_to_see_short { find p.dialog_frame }
       submit_application(p)
       find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])

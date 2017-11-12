@@ -60,9 +60,7 @@ describe 'K12 loan products' do
       wait_to_see_short { find_by_id p.primary_contact_first_name }
       fill_out_contact_information(p)
       continue(p)
-      first '#' + p.how_to_apply, wait:Sleep_lengths[:medium]
-      choose p.how_to_apply, option: 'I'
-      continue(p)
+      choose_individual_application(p)
       wait_to_see_short { find p.dialog_frame }
       within_frame(find(p.dialog_frame)) do
         find(p.electronic_consent).click
