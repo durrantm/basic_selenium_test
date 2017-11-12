@@ -31,7 +31,7 @@ describe 'student loan products' do
       continue(p)
       fill_out_address(p)
       continue(p)
-      wait_to_see_short { find '#' + p.school }
+      wait_to_see_short { find_by_id p.school }
       fill_out_school(p, 'TRINITY')
       wait_for_ajax
       find_by_id p.degree, wait:Sleep_lengths[:medium]
