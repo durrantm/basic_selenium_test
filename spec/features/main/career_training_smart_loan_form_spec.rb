@@ -50,7 +50,7 @@ describe 'student loan products' do
       continue(p)
       wait_to_see_short { find p.dialog_frame }
       submit_application(p)
-      sleepy Sleep_lengths[:long]
+      find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
       expect(find(p.title, text: /^Application Status$/)).to be
       sleep_short
     end
