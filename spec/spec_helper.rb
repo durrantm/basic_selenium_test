@@ -4,6 +4,15 @@ require 'capybara/dsl'
 require 'selenium-webdriver'
 require 'yaml'
 
+class Selenium::WebDriver::Chrome::Service
+  alias_method :original_stop, :stop
+  def stop
+    original_stop
+  rescue Net::ReadTimeout
+    puts "Net::ReadTimeout rescued"
+  end
+end
+
 TEST_ENVIRONMENT='JV2'
 #TEST_ENVIRONMENT='production'
 
