@@ -61,4 +61,15 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
   config.shared_context_metadata_behavior = :apply_to_host_groups
+  config.before :all do
+    CONTINUE_SPEC = true
+  end
+  config.around :each do |example|
+    if CONTINUE_SPEC
+      example.run
+      CONTINUE_SPEC = false if example.exception
+    else
+      example.skip
+    end
+  end
 end
