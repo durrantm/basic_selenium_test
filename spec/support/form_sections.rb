@@ -2,7 +2,7 @@ module FormSections
 
   def fill_out_basic_information_form(form_page, data)
     p,d = form_page, data
-    find_by_id p.first_name, wait: Sleep_lengths[:medium]
+    find_by_id p.first_name, wait: Sleep_lengths[:medium_long]
     fill_in p.first_name, with: 'testFirst'
     fill_in p.middle_initial, with: 't'
     fill_in p.last_name, with: 'testLast'
@@ -157,7 +157,7 @@ module FormSections
   end
 
   def choose_individual_application(p)
-    find 'input#' + p.how_to_apply_individual, visible: true
+    find 'input#' + p.how_to_apply_individual, visible: true, wait: Sleep_lengths[:medium]
     choose p.how_to_apply, option: 'I'
     continue(p)
   end
