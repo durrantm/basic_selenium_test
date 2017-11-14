@@ -1,4 +1,4 @@
-describe 'student loan products', order: :defined do
+describe 'student loan products', loan_type: 'medical_residency', page_type: 'form', order: :defined do
   include Sleepers
   include FormHelpers
   include FormSections
@@ -7,16 +7,16 @@ describe 'student loan products', order: :defined do
   p = PageObject.new
   d = FormDataObject.new
 
-  describe "Medical Residency and Relocation Form", smoke: true, loan_type: 'medical_residency', page_type: 'form' do
-    it "exists for following tests to use, otherwise they are skipped", loan_type: 'medical_residency' do
+  describe "Medical Residency and Relocation Form", smoke: true do
+    it "exists for following tests to use, otherwise they are skipped" do
       visit_url(TEST_ENVIRONMENT, p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
       find p.main_form, visible: true, wait: Sleep_lengths[:medium]
       expect(find(p.main_form)).to be
     end
   end
 
-  describe "Medical Residency and relocation Sad Page 1", sad: true, loan_type: 'medical_residency', page_type: 'form' do
-    it "has a form for Medical Residency and Relocation loans that is filled out Incorrectly", happy: true, loan_type: 'medical_residency' do
+  describe "Medical Residency and relocation Sad Page 1", sad: true do
+    it "has a form for Medical Residency and Relocation loans that is filled out Incorrectly" do
       visit_url(TEST_ENVIRONMENT, p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
@@ -27,13 +27,13 @@ describe 'student loan products', order: :defined do
     end
   end
 
-  describe "Medical Residency and relocation Happy All Pages", happy: true, smoke: true, loan_type: 'medical_residency', page_type: 'form' do
+  describe "Medical Residency and relocation Happy All Pages" do
     it "has a form for Medical Residency and relocation student loans", smoke: true do
       visit_url(TEST_ENVIRONMENT, p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
       find p.main_form, visible: true
       expect(find(p.main_form)).to be
     end
-    it "has a form for Medical Residency and relocation student loans that is filled out correctly", happy: true, loan_type: 'medical_residency' do
+    it "has a form for Medical Residency and relocation student loans that is filled out correctly", happy: true do
       visit_url(TEST_ENVIRONMENT, p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
       fill_out_basic_information_form(p,d)
       continue(p)
