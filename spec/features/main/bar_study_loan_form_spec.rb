@@ -9,7 +9,7 @@ describe 'student loan products', order: :defined do
   d = FormDataObject.new
 
 	describe "Bar Study Form", smoke: true, loan_type: 'bar', page_type: 'form' do
-		it "exists for following tests to use, otherwise they are skipped", loan_type: 'graduate' do
+		it "exists for following tests to use, otherwise they are skipped", loan_type: 'bar' do
 			visit_url(TEST_ENVIRONMENT, p.bar_study_loan_form_url, p.bar_study_loan_form_id, p)
 			find p.main_form, visible: true, wait: Sleep_lengths[:medium]
 			expect(find(p.main_form)).to be
@@ -17,7 +17,7 @@ describe 'student loan products', order: :defined do
 	end
 
 	describe "Bar Study Sad Page 1", sad: true, loan_type: 'bar', page_type: 'form' do
-		it "has a form for Bar Study student loans that is filled out Incorrectly", happy: true, loan_type: 'graduate' do
+		it "has a form for Bar Study student loans that is filled out Incorrectly", happy: true, loan_type: 'bar' do
 			visit_url(TEST_ENVIRONMENT, p.bar_study_loan_form_url, p.bar_study_loan_form_id, p)
 			fill_out_basic_information_form(p,d)
 			fill_in p.first_name, with: ''
@@ -28,13 +28,13 @@ describe 'student loan products', order: :defined do
 		end
 	end
 
-	describe "Bar Study Happy All Pages", happy: true, smoke: true, loan_type: 'graduate', page_type: 'form' do
+	describe "Bar Study Happy All Pages", happy: true, smoke: true, loan_type: 'bar', page_type: 'form' do
 		it "has a form for Bar Study student loans", smoke: true do
 			visit_url(TEST_ENVIRONMENT, p.bar_study_loan_form_url, p.bar_study_loan_form_id, p)
 			find p.main_form, visible: true
 			expect(find(p.main_form)).to be
 		end
-		it "has a form for Bar Study student loans that is filled out correctly", happy: true, loan_type: 'graduate' do
+		it "has a form for Bar Study student loans that is filled out correctly", happy: true, loan_type: 'bar' do
 			visit_url(TEST_ENVIRONMENT, p.bar_study_loan_form_url, p.bar_study_loan_form_id, p)
 			fill_out_basic_information_form(p,d)
 			continue(p)

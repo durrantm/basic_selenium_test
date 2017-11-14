@@ -1,4 +1,4 @@
-describe 'student loan products' do
+describe 'student loan products', order: :defined do
   include Sleepers
   include FormHelpers
   include FormSections
@@ -7,7 +7,16 @@ describe 'student loan products' do
   p = PageObject.new
   d = FormDataObject.new
 
-  describe "Dental Residency and relocation Sad Page 1", sad: true, loan_type: 'dental_residency', page_type: 'form' do
+
+  describe "Dental Residency and Relation Form", smoke: true, loan_type: 'dental_residency', page_type: 'form' do
+    it "exists for following tests to use, otherwise they are skipped", loan_type: 'graduate' do
+      visit_url(TEST_ENVIRONMENT, p.dental_residency_and_relocation_loan_form_url, p.dental_residency_and_relocation_loan_form_id, p)
+      find p.main_form, visible: true, wait: Sleep_lengths[:medium]
+      expect(find(p.main_form)).to be
+    end
+  end
+
+  describe "Dental Residency and Relocation Sad Page 1", sad: true, loan_type: 'dental_residency', page_type: 'form' do
     it "has a form for Dental Residency and Relocation loans that is filled out Incorrectly", happy: true, loan_type: 'dental_residency' do
       visit_url(TEST_ENVIRONMENT, p.dental_residency_and_relocation_loan_form_url, p.dental_residency_and_relocation_loan_form_id, p)
       fill_out_basic_information_form(p,d)
@@ -19,13 +28,13 @@ describe 'student loan products' do
     end
   end
 
-  describe "Dental Residency and relocation Happy All Pages", happy: true, smoke: true, loan_type: 'dental_residency', page_type: 'form' do
+  describe "Dental Residency and Relocation Happy All Pages", happy: true, smoke: true, loan_type: 'dental_residency', page_type: 'form' do
     it "has a form for Dental Residency and relocation student loans", smoke: true do
       visit_url(TEST_ENVIRONMENT, p.dental_residency_and_relocation_loan_form_url, p.dental_residency_and_relocation_loan_form_id, p)
       find p.main_form, visible: true
       expect(find(p.main_form)).to be
     end
-    it "has a form for Dental Residency and relocation student loans that is filled out correctly", happy: true, loan_type: 'dental_residency' do
+    it "has a form for Dental Residency and Relocation student loans that is filled out correctly", happy: true, loan_type: 'dental_residency' do
       visit_url(TEST_ENVIRONMENT, p.dental_residency_and_relocation_loan_form_url, p.dental_residency_and_relocation_loan_form_id, p)
       fill_out_basic_information_form(p,d)
       continue(p)
