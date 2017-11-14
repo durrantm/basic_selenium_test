@@ -100,7 +100,7 @@ module FormSections
   def fill_out_loan_information(p)
     fill_in p.copay, with: '10000'
     fill_in p.financial_assistance, with: '4000'
-    fill_in p.loan, with: '4000'
+    find_by_id(p.financial_assistance).send_keys :tab
     fill_in p.requested_loan, with: '2000'
   end
 
