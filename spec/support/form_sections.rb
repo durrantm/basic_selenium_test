@@ -48,6 +48,7 @@ module FormSections
   end
 
   def fill_out_address(p)
+    wait_for_ajax
     find_by_id p.street_address, wait: Sleep_lengths[:medium]
     fill_in p.street_address, with: '1 main st'
     fill_in p.street_address_2, with: 'Apt#1'
