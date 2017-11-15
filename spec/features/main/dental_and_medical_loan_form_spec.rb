@@ -28,11 +28,6 @@ describe 'student loan products', loan_type: 'dental_and_medical', page_type: 'f
   end
 
   describe "Dental and Medical Happy All Pages" do
-    it "has a form for Dental and Medical student loans", smoke: true do
-      visit_url(TEST_ENVIRONMENT, p.dental_and_medical_loan_form_url, p.dental_and_medical_loan_form_id, p)
-      find p.main_form, visible: true
-      expect(find(p.main_form)).to be
-    end
     it "has a form for Dental and Medical student loans that is filled out correctly", happy: true do
       visit_url(TEST_ENVIRONMENT, p.dental_and_medical_loan_form_url, p.dental_and_medical_loan_form_id, p)
       fill_out_basic_information_form(p,d)

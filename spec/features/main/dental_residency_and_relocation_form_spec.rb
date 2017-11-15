@@ -29,11 +29,6 @@ describe 'student loan products', loan_type: 'dental_residency', page_type: 'for
   end
 
   describe "Dental Residency and Relocation Happy All Pages" do
-    it "has a form for Dental Residency and relocation student loans", smoke: true do
-      visit_url(TEST_ENVIRONMENT, p.dental_residency_and_relocation_loan_form_url, p.dental_residency_and_relocation_loan_form_id, p)
-      find p.main_form, visible: true
-      expect(find(p.main_form)).to be
-    end
     it "has a form for Dental Residency and Relocation student loans that is filled out correctly", happy: true do
       visit_url(TEST_ENVIRONMENT, p.dental_residency_and_relocation_loan_form_url, p.dental_residency_and_relocation_loan_form_id, p)
       fill_out_basic_information_form(p,d)

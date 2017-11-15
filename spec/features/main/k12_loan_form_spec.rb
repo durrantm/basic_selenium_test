@@ -30,11 +30,6 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
   end
 
   describe "K12 Training Happy All Pages", smoke: true do
-    it "has a form for k12 training student loans" do
-      visit_url(TEST_ENVIRONMENT, p.k12_loan_form_url, p.k12_loan_form_id, p)
-      find p.main_form, visible: true
-      expect(find(p.main_form)).to be
-    end
     it "has a form for K12 student loans that is filled out correctly", happy: true do
       visit_url(TEST_ENVIRONMENT, p.k12_loan_form_url, p.k12_loan_form_id, p)
       fill_out_basic_information_form(p,d)

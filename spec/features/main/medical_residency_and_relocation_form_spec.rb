@@ -28,11 +28,6 @@ describe 'student loan products', loan_type: 'medical_residency', page_type: 'fo
   end
 
   describe "Medical Residency and relocation Happy All Pages" do
-    it "has a form for Medical Residency and relocation student loans", smoke: true do
-      visit_url(TEST_ENVIRONMENT, p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
-      find p.main_form, visible: true
-      expect(find(p.main_form)).to be
-    end
     it "has a form for Medical Residency and relocation student loans that is filled out correctly", happy: true do
       visit_url(TEST_ENVIRONMENT, p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
       fill_out_basic_information_form(p,d)
