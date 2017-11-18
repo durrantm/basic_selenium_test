@@ -34,15 +34,10 @@ describe 'student loan products', loan_type: 'medical_residency', page_type: 'fo
       continue(p)
       fill_out_address(p)
       continue(p)
-      wait_to_see_short { find_by_id p.school }
-      fill_out_school(p, 'TRINITY')
+      fill_out_school(p, 'NEW YORK')
       wait_for_ajax
-      find_by_id p.degree, wait:Sleep_lengths[:medium]
-      select 'Doctor of Medicine', from: p.degree
-      select 'MD - Dermatology', from: p.major
-      select 'Full Time', from: p.enrollment_status
-      select 'Jan', from: p.graduation_date_month
-      select (this_year+1), from: p.graduation_date_year
+      fill_out_first_degree_major_enrollment_status_dropdowns(p)
+      fill_out_graduation(p, this_year-1)
       continue(p)
       find_by_id p.requested_loan, wait:Sleep_lengths[:medium]
       fill_in p.requested_loan, with: 10000

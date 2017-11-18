@@ -38,7 +38,7 @@ describe 'student loan products', loan_type: 'undergraduate', page_type: 'form',
       fill_out_school(p, 'TRINITY')
       wait_for_ajax
       find_by_id p.degree, wait:Sleep_lengths[:medium]
-      fill_out_education_degree_information(p, this_year, major='Business')
+      fill_out_education_degree_information(p, this_year)
       continue(p)
       find_by_id p.copay, wait:Sleep_lengths[:medium]
       fill_out_loan_information(p)

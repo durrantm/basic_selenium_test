@@ -13,8 +13,8 @@ class Selenium::WebDriver::Chrome::Service
   end
 end
 
-TEST_ENVIRONMENT='JV2'
-#TEST_ENVIRONMENT='production'
+#TEST_ENVIRONMENT='JV2'
+TEST_ENVIRONMENT='production'
 
 PRODUCTION = (TEST_ENVIRONMENT == 'production' ? true : false)
 JV2 = (TEST_ENVIRONMENT == 'JV2' ? true : false)

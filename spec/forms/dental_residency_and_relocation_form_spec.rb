@@ -38,15 +38,7 @@ describe 'student loan products', loan_type: 'dental_residency', page_type: 'for
       wait_to_see_short { find_by_id p.school }
       fill_out_school(p, 'TRINITY')
       wait_for_ajax
-      find_by_id p.degree, wait:Sleep_lengths[:medium]
-      if PRODUCTION
-        select 'Doctor of Medicine', from: p.degree
-        select 'Medical', from: p.major
-      else
-        select 'Doctor of Dental Surgery/Doctor of Dental Medicine', from: p.degree
-        select 'DDS - Advanced Education In General Dentistry', from: p.major
-      end
-      select 'Full Time', from: p.enrollment_status
+      fill_out_first_degree_major_enrollment_status_dropdowns(p)
       if PRODUCTION
         select 'First Year Masters/Doctorate', from: p.grade_level
         find_by_id(p.periods).send_keys :arrow_down

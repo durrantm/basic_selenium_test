@@ -58,9 +58,9 @@ module FormSections
     select '10', from: p.years_there
   end
 
-  def fill_out_education_degree_information(p, this_year, major='Law and Law Studies')
+  def fill_out_education_degree_information(p, this_year)
     select 'Bachelors', from: p.degree
-    select major, from: p.major
+    find('#' + p.major + ' option:nth-child(2)').select_option
     select 'Full Time', from: p.enrollment_status
     select 'First Year Masters/Doctorate', from: p.grade_level
     fill_out_years(p, this_year)
@@ -84,10 +84,10 @@ module FormSections
   end
 
   def fill_out_education_certificate_information(p, this_year)
-    find_by_id p.degree, wait:Sleep_lengths[:medium]
-    select 'Certificate', from: p.degree
-    select 'Law and Law Studies', from: p.major
-    select 'Full Time', from: p.enrollment_status
+    find('#' + p.degree + ' option:nth-child(2)', visible:true, wait:Sleep_lengths[:medium_long])
+    find('#' + p.degree + ' option:nth-child(2)').select_option
+    find('#' + p.major + ' option:nth-child(2)').select_option
+    find('#' + p.enrollment_status + ' option:nth-child(2)').select_option
     select 'Certificate/Continuing Ed', from: p.grade_level
     select 'Jan', from: p.loan_start_month
     select this_year, from: p.loan_start_year
@@ -95,6 +95,11 @@ module FormSections
     select (this_year + 1), from: p.loan_end_year
     select 'Jan', from: p.graduation_date_month
     select (this_year + 2), from: p.graduation_date_year
+  end
+
+  def fill_out_first_grade_level(p)
+    find('#' + p.grade_level + ' option:nth-child(2)', visible: true, wait:Sleep_lengths[:medium])
+    find('#' + p.grade_level + ' option:nth-child(2)').select_option
   end
 
   def fill_out_loan_information(p)
@@ -155,6 +160,13 @@ module FormSections
     sleep_short
     find_by_id(p.school).send_keys :arrow_down
     find_by_id(p.school).send_keys :tab
+  end
+
+  def fill_out_first_degree_major_enrollment_status_dropdowns(p)
+    find('#' + p.degree + ' option:nth-child(2)', visible:true, wait:Sleep_lengths[:medium_long])
+    find('#' + p.degree + ' option:nth-child(2)').select_option
+    find('#' + p.major + ' option:nth-child(2)').select_option
+    find('#' + p.enrollment_status + ' option:nth-child(2)').select_option
   end
 
   def choose_individual_application(p)

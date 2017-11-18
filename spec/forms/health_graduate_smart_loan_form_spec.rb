@@ -37,19 +37,11 @@ describe 'student loan products', loan_type: 'health_graduate', page_type: 'form
       continue(p)
       fill_out_school(p, 'TRINITY')
       wait_for_ajax
-      find_by_id p.degree, wait:Sleep_lengths[:medium]
+      fill_out_first_degree_major_enrollment_status_dropdowns(p)
       if PRODUCTION
-        select 'Masters', from: p.degree
-        select 'Nursing', from: p.major
-        select 'First Year Masters/Doctorate', from: p.grade_level
+        fill_out_first_grade_level(p)
         select 'Provide your own', from: p.periods
         fill_out_loan_years(p, this_year)
-      else
-        select 'Doctor of Medicine', from: p.degree
-        select 'MD - Dermatology', from: p.major
-      end
-      select 'Full Time', from: p.enrollment_status
-      if PRODUCTION
         fill_out_years(p, this_year)
       else
         fill_out_graduation(p, this_year-1)

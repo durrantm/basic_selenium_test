@@ -37,14 +37,13 @@ describe 'student loan products', loan_type: 'bar', page_type: 'form', order: :d
 			continue(p)
 			fill_out_school(p, 'DRAKE')
 			wait_for_ajax
-			find_by_id p.degree, wait:Sleep_lengths[:medium]
-			select 'Juris Doctor (JD)', from: p.degree
-			select 'Full Time', from: p.enrollment_status
-			select 'Jan', from: p.graduation_date_month
-			select this_year, from: p.graduation_date_year
-			select 'Jan', from: p.exam_date_month
-			select this_year, from: p.exam_date_year
-			continue(p)
+      find('#' + p.degree + ' option:nth-child(2)', visible:true, wait:Sleep_lengths[:medium_long])
+      find('#' + p.degree + ' option:nth-child(2)').select_option
+      select 'Full Time', from: p.enrollment_status
+      fill_out_graduation(p, this_year-2)
+      select 'Jan', from: p.exam_date_month
+      select this_year, from: p.exam_date_year
+      continue(p)
 			find_by_id p.requested_loan, wait: Sleep_lengths[:medium]
 			fill_in p.requested_loan, with: 10000
 			fill_out_disbursement_information(p, this_year)

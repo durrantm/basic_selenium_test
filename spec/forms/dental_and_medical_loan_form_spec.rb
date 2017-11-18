@@ -37,17 +37,11 @@ describe 'student loan products', loan_type: 'dental_and_medical', page_type: 'f
       find(p.main_form)
       fill_out_school(p, 'SUNY')
       wait_for_ajax
-      find_by_id p.degree, wait:Sleep_lengths[:medium]
-      select 'Doctor of Medicine', from: p.degree
-      select 'Medical', from: p.major
-      select 'Full Time', from: p.enrollment_status
-      select 'First Year Masters/Doctorate', from: p.grade_level
+      fill_out_first_degree_major_enrollment_status_dropdowns(p)
+      fill_out_first_grade_level(p)
       select all('#' + p.periods + ' option').last.text, from: p.periods if PRODUCTION
       select_last_academic_period(p) if PRODUCTION
-      select 'Jan', from: p.loan_start_month
-      select this_year, from: p.loan_start_year
-      select 'Jan', from: p.loan_end_month
-      select (this_year+1), from: p.loan_end_year
+      fill_out_loan_years(p, this_year)
       select 'Jan', from: p.graduation_date_month
       select (this_year+2), from: p.graduation_date_year
       continue(p)
