@@ -59,10 +59,11 @@ module FormSections
   end
 
   def fill_out_education_degree_information(p, this_year)
-    select 'Bachelors', from: p.degree
+    find('#' + p.degree + ' option:nth-child(2)', visible:true, wait:Sleep_lengths[:medium_long])
+    find('#' + p.degree + ' option:nth-child(2)').select_option
     find('#' + p.major + ' option:nth-child(2)').select_option
-    select 'Full Time', from: p.enrollment_status
-    select 'First Year Masters/Doctorate', from: p.grade_level
+    find('#' + p.enrollment_status + ' option:nth-child(2)').select_option
+    find('#' + p.grade_level + ' option:nth-child(2)').select_option
     fill_out_years(p, this_year)
   end
 
@@ -88,7 +89,7 @@ module FormSections
     find('#' + p.degree + ' option:nth-child(2)').select_option
     find('#' + p.major + ' option:nth-child(2)').select_option
     find('#' + p.enrollment_status + ' option:nth-child(2)').select_option
-    select 'Certificate/Continuing Ed', from: p.grade_level
+    find('#' + p.grade_level + ' option:nth-child(2)').select_option
     select 'Jan', from: p.loan_start_month
     select this_year, from: p.loan_start_year
     select 'Jan', from: p.loan_end_month

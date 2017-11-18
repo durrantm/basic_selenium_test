@@ -40,7 +40,7 @@ describe 'student loan products', loan_type: 'dental_residency', page_type: 'for
       wait_for_ajax
       fill_out_first_degree_major_enrollment_status_dropdowns(p)
       if PRODUCTION
-        select 'First Year Masters/Doctorate', from: p.grade_level
+        fill_out_first_grade_level(p)
         find_by_id(p.periods).send_keys :arrow_down
         find_by_id(p.periods).send_keys :tab
         select_last_academic_period(p)

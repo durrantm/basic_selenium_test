@@ -38,7 +38,6 @@ describe 'student loan products', loan_type: 'mba', page_type: 'form', order: :d
       wait_to_see_short { find_by_id p.school }
       fill_out_school(p, 'COLUMBIA UNIVERSITY')
       wait_for_ajax
-      find_by_id p.degree, wait:Sleep_lengths[:medium]
       fill_out_first_degree_major_enrollment_status_dropdowns(p)
       fill_out_first_grade_level(p)
       fill_out_years(p, this_year)
