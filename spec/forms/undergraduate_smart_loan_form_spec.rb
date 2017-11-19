@@ -34,24 +34,21 @@ describe 'student loan products', loan_type: 'undergraduate', page_type: 'form',
       continue(p)
       fill_out_address(p)
       continue(p)
-      find_by_id p.school, wait:Sleep_lengths[:medium]
+      find_by_id_medium p.school
       fill_out_school(p, 'TRINITY')
       wait_for_ajax
-      find_by_id p.degree, wait:Sleep_lengths[:medium]
+      find_by_id_medium p.degree
       fill_out_education_degree_information(p, this_year)
       continue(p)
-      find_by_id p.copay, wait:Sleep_lengths[:medium]
+      find_by_id_medium p.copay
       fill_out_loan_information(p)
       continue(p)
-      wait_to_see_short { find_by_id p.employment_status }
       fill_out_employment_information(p)
       continue(p)
       wait_to_see_short { find_by_id p.checking_account }
       check p.checking_account
-      find_by_id p.checking_amount
       fill_out_financial_information(p)
       continue(p)
-      wait_to_see_short { find_by_id p.primary_contact_first_name }
       fill_out_contact_information(p)
       continue(p)
       choose_individual_application(p)

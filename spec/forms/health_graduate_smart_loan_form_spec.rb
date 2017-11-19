@@ -43,28 +43,23 @@ describe 'student loan products', loan_type: 'health_graduate', page_type: 'form
         select 'Provide your own', from: p.periods
         fill_out_loan_years(p, this_year)
         fill_out_years(p, this_year)
-      else
-        fill_out_graduation(p, this_year-1)
-      end
-      continue(p)
-      if PRODUCTION
-        find_by_id p.copay, wait:Sleep_lengths[:medium]
+        continue(p)
+        find_by_id_medium p.copay
         fill_out_loan_information(p)
       else
-        find_by_id p.requested_loan, wait:Sleep_lengths[:medium]
+        fill_out_graduation(p, this_year-1)
+        continue(p)
+        find_by_id_medium p.requested_loan
         fill_in p.requested_loan, with: '10000'
         fill_out_disbursement_information(p, this_year)
       end
       continue(p)
-      wait_to_see_short { find_by_id p.employment_status }
       fill_out_employment_information(p)
       continue(p)
       wait_to_see_short { find_by_id p.checking_account }
       check(p.checking_account)
-      wait_to_see_short { find_by_id p.checking_amount }
       fill_out_financial_information(p)
       continue(p)
-      wait_to_see_short { find_by_id p.primary_contact_first_name }
       fill_out_contact_information(p)
       continue(p)
       choose_individual_application(p)

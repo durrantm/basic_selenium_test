@@ -6,7 +6,6 @@ describe 'student loan products', loan_type: 'graduate', page_type: 'form', orde
   p = PageObject.new
   d = FormDataObject.new
 
-
   describe "Gradudate Form", smoke: true do
     it "exists for following tests to use, otherwise they are skipped" do
       visit_url(TEST_ENVIRONMENT, p.graduate_loan_form_url, p.graduate_loan_form_id, p)
@@ -37,10 +36,10 @@ describe 'student loan products', loan_type: 'graduate', page_type: 'form', orde
       wait_to_see_short { find_by_id p.school }
       fill_out_school(p, 'Trinity')
       wait_for_ajax
-      find_by_id p.degree, wait:Sleep_lengths[:medium]
+      find_by_id_medium p.degree
       fill_out_education_degree_information(p, this_year)
       continue(p)
-      find_by_id p.copay, wait:Sleep_lengths[:medium]
+      find_by_id_medium p.copay
       fill_out_loan_information(p)
       continue(p)
       wait_to_see_short { find_by_id p.employment_status }

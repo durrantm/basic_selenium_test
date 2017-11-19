@@ -44,7 +44,7 @@ describe 'student loan products', loan_type: 'bar', page_type: 'form', order: :d
       select 'Jan', from: p.exam_date_month
       select this_year, from: p.exam_date_year
       continue(p)
-			find_by_id p.requested_loan, wait: Sleep_lengths[:medium]
+			find_by_id_medium p.requested_loan
 			fill_in p.requested_loan, with: 10000
 			fill_out_disbursement_information(p, this_year)
 			continue(p)
@@ -56,17 +56,11 @@ describe 'student loan products', loan_type: 'bar', page_type: 'form', order: :d
 			continue(p)
 			choose_individual_application(p)
 			find p.dialog_frame, wait: Sleep_lengths[:medium]
-			within_frame(find(p.dialog_frame)) do
-				find(p.electronic_consent).click
-			end
+			within_frame(find(p.dialog_frame)) { find(p.electronic_consent).click }
 			find(p.dialog_frame)
-			within_frame(find(p.dialog_frame)) do
-				find(p.button_continue).click
-			end
+			within_frame(find(p.dialog_frame)) { find(p.button_continue).click }
 			find(p.dialog_frame)
-			within_frame(find(p.dialog_frame)) do
-				find(p.submit_application).click
-			end
+			within_frame(find(p.dialog_frame)) { find(p.submit_application).click }
 			find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
 			expect(find(p.title, text: /^Application Status$/)).to be
 			sleep_short

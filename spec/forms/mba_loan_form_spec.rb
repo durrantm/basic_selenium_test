@@ -42,18 +42,15 @@ describe 'student loan products', loan_type: 'mba', page_type: 'form', order: :d
       fill_out_first_grade_level(p)
       fill_out_years(p, this_year)
       continue(p)
-      find_by_id p.copay, wait:Sleep_lengths[:medium]
+      find_by_id_medium p.copay
       fill_out_loan_information(p)
       continue(p)
-      wait_to_see_short { find_by_id p.employment_status }
       fill_out_employment_information(p)
       continue(p)
       wait_to_see_short { find_by_id p.checking_account }
       check(p.checking_account)
-      wait_to_see_short { find_by_id p.checking_amount }
       fill_out_financial_information(p)
       continue(p)
-      wait_to_see_short { find_by_id p.primary_contact_first_name }
       fill_out_contact_information(p)
       continue(p)
       choose_individual_application(p)

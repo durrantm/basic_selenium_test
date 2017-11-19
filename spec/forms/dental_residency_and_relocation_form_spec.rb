@@ -49,7 +49,7 @@ describe 'student loan products', loan_type: 'dental_residency', page_type: 'for
         fill_out_graduation(p, this_year - 1)
       end
       continue(p)
-      find_by_id p.requested_loan, wait:Sleep_lengths[:medium]
+      find_by_id_medium p.requested_loan
       if PRODUCTION
         fill_out_loan_information(p)
       else
@@ -57,15 +57,13 @@ describe 'student loan products', loan_type: 'dental_residency', page_type: 'for
         fill_out_disbursement_information(p, this_year)
       end
       continue(p)
-      wait_to_see_short { find_by_id p.employment_status }
+      find_by_id p.employment_status
       fill_out_employment_information(p)
       continue(p)
       wait_to_see_short { find_by_id p.checking_account }
       check(p.checking_account)
-      wait_to_see_short { find_by_id p.checking_amount }
       fill_out_financial_information(p)
       continue(p)
-      wait_to_see_short { find_by_id p.primary_contact_first_name }
       fill_out_contact_information(p)
       continue(p)
       choose_individual_application(p)
@@ -73,16 +71,9 @@ describe 'student loan products', loan_type: 'dental_residency', page_type: 'for
       if PRODUCTION
         submit_application(p)
       else
-        within_frame(find(p.dialog_frame)) do
-          find(p.electronic_consent).click
-        end
-        within_frame(find(p.dialog_frame)) do
-          wait_to_see_short { find p.button_continue }
-          find(p.button_continue).click
-        end
-        within_frame(find(p.dialog_frame)) do
-          find(p.submit_application).click
-        end
+        within_frame(find(p.dialog_frame)) { find(p.electronic_consent).click }
+        within_frame(find(p.dialog_frame)) { find(p.button_continue).click }
+        within_frame(find(p.dialog_frame)) { find(p.submit_application).click }
       end
       find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
       expect(find(p.title, text: /^Application Status$/)).to be

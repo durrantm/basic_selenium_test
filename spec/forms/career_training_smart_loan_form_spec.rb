@@ -37,10 +37,10 @@ describe 'student loan products', loan_type: 'career_training', page_type: 'form
       continue(p)
       fill_out_school(p, 'NEW YORK METHODIST HOSPITAL')
       wait_for_ajax
-      find_by_id p.degree, wait:Sleep_lengths[:medium]
+      find_by_id_medium p.degree
       fill_out_education_certificate_information(p, this_year)
       continue(p)
-      find_by_id p.copay, wait: Sleep_lengths[:medium]
+      find_by_id_medium p.copay
       fill_out_loan_information(p)
       continue(p)
       fill_out_employment_information(p)
