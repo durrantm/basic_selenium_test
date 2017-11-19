@@ -33,12 +33,12 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
     it "has a form for K12 student loans that is filled out correctly", happy: true do
       visit_url(TEST_ENVIRONMENT, p.k12_loan_form_url, p.k12_loan_form_id, p)
       fill_out_basic_information_form(p,d)
-      wait_to_see_short { p.relationship_to_student }
+      find_by_id p.relationship_to_student
       select 'Parent', from: p.relationship_to_student
       continue(p)
       fill_out_address(p)
       continue(p)
-      wait_to_see_short { find_by_id p.student_first_name }
+      find_by_id p.student_first_name
       fill_in p.student_first_name, with: 'testfirst'
       fill_in p.student_first_name, with: 'testfirst'
       fill_in p.student_last_name, with: 'testLast'
@@ -48,36 +48,27 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
       fill_out_student_ssn_and_confirm_ssn(p)
       fill_out_school(p, "NEW YORK MILITARY")
       wait_for_ajax
-      find_by_id p.grade_level, wait:Sleep_lengths[:medium]
+      find_by_id_medium p.grade_level
       select 'Kindergarten', from: p.grade_level
       continue(p)
-      find_by_id p.requested_loan, wait:Sleep_lengths[:medium]
+      find_by_id_medium p.requested_loan
       fill_in p.requested_loan, with: '4000'
       continue(p)
-      wait_to_see_short { find_by_id p.employment_status }
       fill_out_employment_information(p)
       continue(p)
-      wait_to_see_short { find_by_id p.checking_account }
+      find_by_id p.checking_account
       check(p.checking_account)
-      wait_to_see_short { find_by_id p.checking_amount }
       fill_out_financial_information(p)
       continue(p)
-      wait_to_see_short { find_by_id p.primary_contact_first_name }
       fill_out_contact_information(p)
       continue(p)
       choose_individual_application(p)
-      wait_to_see_short { find p.dialog_frame }
-      within_frame(find(p.dialog_frame)) do
-        find(p.electronic_consent).click
-      end
-      wait_to_see_short { find p.dialog_frame }
-      within_frame(find(p.dialog_frame)) do
-        find(p.button_continue).click
-      end
-      wait_to_see_short { find p.dialog_frame }
-      within_frame(find(p.dialog_frame)) do
-        find(p.submit_application).click
-      end
+      find p.dialog_frame
+      within_frame(find(p.dialog_frame)) { find(p.electronic_consent).click }
+      find p.dialog_frame
+      within_frame(find(p.dialog_frame)) { find(p.button_continue).click }
+      find p.dialog_frame
+      within_frame(find(p.dialog_frame)) { find(p.submit_application).click }
       find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
       expect(find(p.title, text: /^Application Status$/)).to be
       sleep_short

@@ -45,16 +45,16 @@ describe 'student loan products', loan_type: 'medical_residency', page_type: 'fo
       continue(p)
       fill_out_employment_information(p)
       continue(p)
-      wait_to_see_short { find_by_id p.checking_account }
+      find_by_id p.checking_account
       check(p.checking_account)
       fill_out_financial_information(p)
       continue(p)
       fill_out_contact_information(p)
       continue(p)
       choose_individual_application(p)
-      wait_to_see_short { find p.dialog_frame }
+      find p.dialog_frame
       within_frame(find(p.dialog_frame)) { find(p.electronic_consent).click }
-      wait_to_see_short { find p.dialog_frame }
+      find p.dialog_frame
       within_frame(find(p.dialog_frame)) { find(p.button_continue).click }
       within_frame(find(p.dialog_frame)) { find(p.submit_application).click }
       find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])

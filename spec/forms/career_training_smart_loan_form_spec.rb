@@ -50,7 +50,7 @@ describe 'student loan products', loan_type: 'career_training', page_type: 'form
       fill_out_contact_information(p)
       continue(p)
       choose_individual_application(p)
-      wait_to_see_short { find p.dialog_frame }
+      find p.dialog_frame
       submit_application(p)
       find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
       expect(find(p.title, text: /^Application Status$/)).to be

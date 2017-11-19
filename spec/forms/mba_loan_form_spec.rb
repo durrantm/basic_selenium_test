@@ -35,7 +35,6 @@ describe 'student loan products', loan_type: 'mba', page_type: 'form', order: :d
       continue(p)
       fill_out_address(p)
       continue(p)
-      wait_to_see_short { find_by_id p.school }
       fill_out_school(p, 'COLUMBIA UNIVERSITY')
       wait_for_ajax
       fill_out_first_degree_major_enrollment_status_dropdowns(p)
@@ -47,14 +46,14 @@ describe 'student loan products', loan_type: 'mba', page_type: 'form', order: :d
       continue(p)
       fill_out_employment_information(p)
       continue(p)
-      wait_to_see_short { find_by_id p.checking_account }
+      find_by_id p.checking_account
       check(p.checking_account)
       fill_out_financial_information(p)
       continue(p)
       fill_out_contact_information(p)
       continue(p)
       choose_individual_application(p)
-      wait_to_see_short { find p.dialog_frame }
+      find p.dialog_frame
       submit_application(p)
       find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
       expect(find(p.title, text: /^Application Status$/)).to be

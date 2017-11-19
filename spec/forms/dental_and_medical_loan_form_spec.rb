@@ -50,14 +50,14 @@ describe 'student loan products', loan_type: 'dental_and_medical', page_type: 'f
       continue(p)
       fill_out_employment_information(p)
       continue(p)
-      wait_to_see_short { find_by_id p.checking_account }
+      find_by_id p.checking_account
       check(p.checking_account)
       fill_out_financial_information(p)
       continue(p)
       fill_out_contact_information(p)
       continue(p)
       choose_individual_application(p)
-      wait_to_see_short { find p.dialog_frame }
+      find p.dialog_frame
       submit_application(p)
       find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
       expect(find(p.title, text: /^Application Status$/)).to be
