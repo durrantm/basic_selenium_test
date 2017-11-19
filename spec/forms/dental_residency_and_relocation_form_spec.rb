@@ -71,9 +71,9 @@ describe 'student loan products', loan_type: 'dental_residency', page_type: 'for
       if PRODUCTION
         submit_application(p)
       else
-        within_frame(find(p.dialog_frame)) { find(p.electronic_consent).click }
-        within_frame(find(p.dialog_frame)) { find(p.button_continue).click }
-        within_frame(find(p.dialog_frame)) { find(p.submit_application).click }
+        electronic_consent(p)
+        continue_in_dialog_frame(p)
+        click_submit_application(p)
       end
       find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
       expect(find(p.title, text: /^Application Status$/)).to be

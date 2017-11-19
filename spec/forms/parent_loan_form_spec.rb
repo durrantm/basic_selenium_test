@@ -7,7 +7,6 @@ describe 'student loan products', loan_type: 'parent', page_type: 'form', order:
   p = PageObject.new
   d = FormDataObject.new
 
-
   describe "Parent Form", smoke: true do
     it "exists for following tests to use, otherwise they are skipped" do
       visit_url(TEST_ENVIRONMENT, p.parent_loan_form_url, p.parent_loan_form_id, p)

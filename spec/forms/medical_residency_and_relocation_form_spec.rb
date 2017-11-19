@@ -52,11 +52,9 @@ describe 'student loan products', loan_type: 'medical_residency', page_type: 'fo
       fill_out_contact_information(p)
       continue(p)
       choose_individual_application(p)
-      find p.dialog_frame
-      within_frame(find(p.dialog_frame)) { find(p.electronic_consent).click }
-      find p.dialog_frame
-      within_frame(find(p.dialog_frame)) { find(p.button_continue).click }
-      within_frame(find(p.dialog_frame)) { find(p.submit_application).click }
+      electronic_consent(p)
+      continue_in_dialog_frame(p)
+      click_submit_application(p)
       find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
       expect(find(p.title, text: /^Application Status$/)).to be
       sleep_short

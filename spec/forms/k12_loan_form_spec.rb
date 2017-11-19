@@ -48,8 +48,7 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
       fill_out_student_ssn_and_confirm_ssn(p)
       fill_out_school(p, "NEW YORK MILITARY")
       wait_for_ajax
-      find_by_id_medium p.grade_level
-      select 'Kindergarten', from: p.grade_level
+      fill_out_first_grade_level(p)
       continue(p)
       find_by_id_medium p.requested_loan
       fill_in p.requested_loan, with: '4000'
@@ -64,11 +63,9 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
       continue(p)
       choose_individual_application(p)
       find p.dialog_frame
-      within_frame(find(p.dialog_frame)) { find(p.electronic_consent).click }
-      find p.dialog_frame
-      within_frame(find(p.dialog_frame)) { find(p.button_continue).click }
-      find p.dialog_frame
-      within_frame(find(p.dialog_frame)) { find(p.submit_application).click }
+      electronic_consent(p)
+      continue_in_dialog_frame(p)
+      click_submit_application(p)
       find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
       expect(find(p.title, text: /^Application Status$/)).to be
       sleep_short

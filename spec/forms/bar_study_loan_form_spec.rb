@@ -37,8 +37,7 @@ describe 'student loan products', loan_type: 'bar', page_type: 'form', order: :d
 			continue(p)
 			fill_out_school(p, 'DRAKE')
 			wait_for_ajax
-      find('#' + p.degree + ' option:nth-child(2)', visible:true, wait:Sleep_lengths[:medium_long])
-      find('#' + p.degree + ' option:nth-child(2)').select_option
+      fill_out_first_degree(p)
       select 'Full Time', from: p.enrollment_status
       fill_out_graduation(p, this_year-2)
       select 'Jan', from: p.exam_date_month
@@ -56,11 +55,9 @@ describe 'student loan products', loan_type: 'bar', page_type: 'form', order: :d
 			continue(p)
 			choose_individual_application(p)
 			find p.dialog_frame, wait: Sleep_lengths[:medium]
-			within_frame(find(p.dialog_frame)) { find(p.electronic_consent).click }
-			find(p.dialog_frame)
-			within_frame(find(p.dialog_frame)) { find(p.button_continue).click }
-			find(p.dialog_frame)
-			within_frame(find(p.dialog_frame)) { find(p.submit_application).click }
+      electronic_consent(p)
+      continue_in_dialog_frame(p)
+      click_submit_application(p)
 			find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
 			expect(find(p.title, text: /^Application Status$/)).to be
 			sleep_short

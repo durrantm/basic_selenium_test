@@ -170,6 +170,11 @@ module FormSections
     find('#' + p.enrollment_status + ' option:nth-child(2)').select_option
   end
 
+  def fill_out_first_degree(p)
+    find('#' + p.degree + ' option:nth-child(2)', visible:true, wait:Sleep_lengths[:medium_long])
+    find('#' + p.degree + ' option:nth-child(2)').select_option
+  end
+
   def choose_individual_application(p)
     find 'input#' + p.how_to_apply_individual, visible: true, wait: Sleep_lengths[:medium]
     choose p.how_to_apply, option: 'I'
