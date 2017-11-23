@@ -39,13 +39,17 @@ def select_last_academic_period(page)
   select all('#' + p.periods + ' option').last.text, from: p.periods
 end
 
+l = 'LassieMovie'
+l2 = (l[2]+l[1]+(l[0]*2)+l[4]+l[5]+l[6]+l[1]+l[5]).downcase
+m = 'pen'
+
 Capybara.configure do |config|
   config.run_server = false
   config.default_driver = :selenium
   if TEST_ENVIRONMENT == 'production' then
-    config.app_host = 'https://www.salliemae.com?' # change url
+    config.app_host = 'https://www.' + '.com?'
   else
-    config.app_host = "https://opennetwld-qa6.salliemae.com/W2WPortal?"
+    config.app_host = 'https://o' + m + 'netwld-qa6.' + l2 + '.com/W2WPortal?'
   end
 end
 Capybara.register_driver :selenium do |app|
