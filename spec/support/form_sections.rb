@@ -59,10 +59,8 @@ module FormSections
   end
 
   def fill_out_education_degree_information(p, this_year)
-    find('#' + p.degree + ' option:nth-child(2)', visible:true, wait:Sleep_lengths[:medium_long])
-    find('#' + p.degree + ' option:nth-child(2)').select_option
-    find('#' + p.major + ' option:nth-child(2)').select_option
-    find('#' + p.enrollment_status + ' option:nth-child(2)').select_option
+    fill_out_first_degree(p)
+    fill_out_major_enrollment_status(p)
     find('#' + p.grade_level + ' option:nth-child(2)').select_option
     fill_out_years(p, this_year)
   end
@@ -85,17 +83,11 @@ module FormSections
   end
 
   def fill_out_education_certificate_information(p, this_year)
-    find('#' + p.degree + ' option:nth-child(2)', visible:true, wait:Sleep_lengths[:medium_long])
-    find('#' + p.degree + ' option:nth-child(2)').select_option
-    find('#' + p.major + ' option:nth-child(2)').select_option
-    find('#' + p.enrollment_status + ' option:nth-child(2)').select_option
+    fill_out_first_degree(p)
+    fill_out_major_enrollment_status(p)
     find('#' + p.grade_level + ' option:nth-child(2)').select_option
-    select 'Jan', from: p.loan_start_month
-    select this_year, from: p.loan_start_year
-    select 'Jan', from: p.loan_end_month
-    select (this_year + 1), from: p.loan_end_year
-    select 'Jan', from: p.graduation_date_month
-    select (this_year + 2), from: p.graduation_date_year
+    fill_out_loan_years(p, this_year)
+    fill_out_graduation(p, this_year)
   end
 
   def fill_out_first_grade_level(p)
@@ -164,15 +156,18 @@ module FormSections
   end
 
   def fill_out_first_degree_major_enrollment_status_dropdowns(p)
-    find('#' + p.degree + ' option:nth-child(2)', visible:true, wait:Sleep_lengths[:medium_long])
-    find('#' + p.degree + ' option:nth-child(2)').select_option
-    find('#' + p.major + ' option:nth-child(2)').select_option
-    find('#' + p.enrollment_status + ' option:nth-child(2)').select_option
+    fill_out_first_degree(p)
+    fill_out_major_enrollment_status(p)
   end
 
   def fill_out_first_degree(p)
     find('#' + p.degree + ' option:nth-child(2)', visible:true, wait:Sleep_lengths[:medium_long])
     find('#' + p.degree + ' option:nth-child(2)').select_option
+  end
+
+  def fill_out_major_enrollment_status(p)
+    find('#' + p.major + ' option:nth-child(2)').select_option
+    find('#' + p.enrollment_status + ' option:nth-child(2)').select_option
   end
 
   def choose_individual_application(p)
