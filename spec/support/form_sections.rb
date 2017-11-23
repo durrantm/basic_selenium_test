@@ -170,6 +170,21 @@ module FormSections
     find('#' + p.enrollment_status + ' option:nth-child(2)').select_option
   end
 
+  def fill_out_cosigner(p)
+    find 'input#' + p.how_to_apply_individual, visible: true, wait: Sleep_lengths[:medium]
+    choose p.how_to_apply, option: 'J'
+    continue(p)
+    within_frame(find(p.dialog_frame)) do
+			first('input#ConsumerICCCosignerwithMe').click
+      click_on 'Continue'
+			find 'img#ElectronicConsentAccept'.click
+			click_on 'ElectronicConsentAccept'
+			sleep 5000
+      sleep 3
+    end
+    sleep 5000
+  end
+
   def choose_individual_application(p)
     find 'input#' + p.how_to_apply_individual, visible: true, wait: Sleep_lengths[:medium]
     choose p.how_to_apply, option: 'I'
