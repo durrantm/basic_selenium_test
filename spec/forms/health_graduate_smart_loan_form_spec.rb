@@ -1,4 +1,5 @@
 describe 'student loan products', loan_type: 'health_graduate', page_type: 'form'  do
+
   include Sleepers
   include FormHelpers
   include FormSections
@@ -6,7 +7,6 @@ describe 'student loan products', loan_type: 'health_graduate', page_type: 'form
 
   p = PageObject.new
   d = FormDataObject.new
-
 
   describe "Health Graduate Form", smoke: true do
     it "exists for following tests to use, otherwise they are skipped" do

@@ -1,4 +1,5 @@
 describe 'student loan products', loan_type: 'career_training', page_type: 'form', order: :defined do
+
   include Sleepers
   include FormHelpers
   include FormSections

@@ -1,4 +1,5 @@
 describe 'student loan products', loan_type: 'dental_residency', page_type: 'form', order: :defined do
+
   include Sleepers
   include FormHelpers
   include FormSections
@@ -6,7 +7,6 @@ describe 'student loan products', loan_type: 'dental_residency', page_type: 'for
 
   p = PageObject.new
   d = FormDataObject.new
-
 
   describe "Dental Residency and Relation Form", smoke: true do
     it "exists for following tests to use, otherwise they are skipped" do

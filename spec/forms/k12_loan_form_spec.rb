@@ -1,4 +1,5 @@
 describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defined do
+
   include Sleepers
   include FormHelpers
   include FormSections
@@ -6,7 +7,6 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
 
   p = PageObject.new
   d = FormDataObject.new
-
 
   describe "K12 Form", smoke: true do
     it "exists for following tests to use, otherwise they are skipped" do
