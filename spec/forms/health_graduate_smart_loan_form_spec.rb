@@ -72,9 +72,7 @@ describe 'student loan products', loan_type: 'health_graduate', page_type: 'form
         continue_in_dialog_frame(p)
         click_submit_application(p)
       end
-      find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
-      expect(find(p.title, text: /^Application Status$/)).to be
-      sleep_short
+      expect_to_see_application_status_page(p)
     end
   end
 end

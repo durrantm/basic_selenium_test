@@ -66,9 +66,7 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
       electronic_consent(p)
       continue_in_dialog_frame(p)
       click_submit_application(p)
-      find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
-      expect(find(p.title, text: /^Application Status$/)).to be
-      sleep_short
+      expect_to_see_application_status_page(p)
     end
   end
 end

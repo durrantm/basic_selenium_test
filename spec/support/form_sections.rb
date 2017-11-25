@@ -302,4 +302,11 @@ module FormSections
       find(p.button_continue).click
     end
   end
+
+  def expect_to_see_application_status_page(p)
+    find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
+    expect(find(p.title, text: /^Application Status$/)).to be
+    sleep_short
+  end
+
 end

@@ -57,9 +57,7 @@ describe 'student loan products', loan_type: 'parent', page_type: 'form', order:
         first('input#rdoStudentDependentConfirmation').click
       end
       submit_application(p)
-      find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
-      expect(find(p.title, text: /^Application Status$/)).to be
-      sleep_short
+      expect_to_see_application_status_page(p)
     end
   end
 end
