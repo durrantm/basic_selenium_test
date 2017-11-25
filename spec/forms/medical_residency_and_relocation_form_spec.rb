@@ -8,7 +8,7 @@ describe 'student loan products', loan_type: 'medical_residency', page_type: 'fo
   p = PageObject.new
   d = FormDataObject.new
 
-  describe "Medical Residency and Relocation Form", smoke: true do
+  describe "Medical Residency and Relocation Form", :smoke do
     it "exists for following tests to use, otherwise they are skipped" do
       visit_url(TEST_ENVIRONMENT, p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
       find p.main_form, visible: true, wait: Sleep_lengths[:medium]
@@ -16,7 +16,7 @@ describe 'student loan products', loan_type: 'medical_residency', page_type: 'fo
     end
   end
 
-  describe "Medical Residency and relocation Sad Page 1", sad: true do
+  describe "Medical Residency and relocation Sad Page 1", :sad do
     it "has a form for Medical Residency and Relocation loans that is filled out Incorrectly" do
       visit_url(TEST_ENVIRONMENT, p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
       fill_out_basic_information_form(p,d)
@@ -28,8 +28,8 @@ describe 'student loan products', loan_type: 'medical_residency', page_type: 'fo
     end
   end
 
-  describe "Medical Residency and relocation Happy All Pages" do
-    it "has a form for Medical Residency and relocation student loans that is filled out correctly", happy: true do
+  describe "Medical Residency and relocation Happy All Pages", :happy do
+    it "has a form for Medical Residency and relocation student loans that is filled out correctly" do
       visit_url(TEST_ENVIRONMENT, p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
       fill_out_basic_information_form(p,d)
       continue(p)

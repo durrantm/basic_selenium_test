@@ -8,7 +8,7 @@ describe 'student loan products', loan_type: 'mba', page_type: 'form', order: :d
   p = PageObject.new
   d = FormDataObject.new
 
-  describe "MBA Form", smoke: true do
+  describe "MBA Form", :smoke do
     it "exists for following tests to use, otherwise they are skipped" do
       visit_url(TEST_ENVIRONMENT, p.mba_loan_form_url, p.mba_loan_form_id, p)
       find p.main_form, visible: true, wait: Sleep_lengths[:medium]
@@ -16,7 +16,7 @@ describe 'student loan products', loan_type: 'mba', page_type: 'form', order: :d
     end
   end
 
-  describe "MBA Sad Page 1", sad: true do
+  describe "MBA Sad Page 1", :sad do
     it "has a form for MBA student loans that is filled out Incorrectly" do
       visit_url(TEST_ENVIRONMENT, p.mba_loan_form_url, p.mba_loan_form_id, p)
       fill_out_basic_information_form(p,d)
@@ -28,8 +28,8 @@ describe 'student loan products', loan_type: 'mba', page_type: 'form', order: :d
     end
   end
 
-  describe "MBA Happy All Pages" do
-    it "has a form for MBA student loans that is filled out correctly", happy: true do
+  describe "MBA Happy All Pages", :happy do
+    it "has a form for MBA student loans that is filled out correctly" do
       visit_url(TEST_ENVIRONMENT, p.mba_loan_form_url, p.mba_loan_form_id, p)
       fill_out_basic_information_form(p,d)
       continue(p)

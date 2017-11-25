@@ -7,7 +7,7 @@ describe 'student loan products', loan_type: 'graduate', page_type: 'form', orde
   p = PageObject.new
   d = FormDataObject.new
 
-  describe "Gradudate Form", smoke: true do
+  describe "Gradudate Form", :smoke do
     it "exists for following tests to use, otherwise they are skipped" do
       visit_url(TEST_ENVIRONMENT, p.graduate_loan_form_url, p.graduate_loan_form_id, p)
       find p.main_form, visible: true, wait: Sleep_lengths[:medium]
@@ -15,7 +15,7 @@ describe 'student loan products', loan_type: 'graduate', page_type: 'form', orde
     end
   end
 
-  describe "Graduate Sad Page 1", sad: true do
+  describe "Graduate Sad Page 1", :sad do
     it "has a form for Graduate student loans that is filled out Incorrectly" do
       visit_url(TEST_ENVIRONMENT, p.graduate_loan_form_url, p.graduate_loan_form_id, p)
       fill_out_basic_information_form(p,d)
@@ -27,8 +27,8 @@ describe 'student loan products', loan_type: 'graduate', page_type: 'form', orde
     end
   end
 
-  describe "Graduate Happy All Pages" do
-    it "has a form for Graduate student loans that is filled out correctly", happy: true do
+  describe "Graduate Happy All Pages", :happy do
+    it "has a form for Graduate student loans that is filled out correctly" do
       visit_url(TEST_ENVIRONMENT, p.graduate_loan_form_url, p.graduate_loan_form_id, p)
       fill_out_basic_information_form(p,d)
       continue(p)

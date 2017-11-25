@@ -8,7 +8,7 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
   p = PageObject.new
   d = FormDataObject.new
 
-  describe "K12 Form", smoke: true do
+  describe "K12 Form", :smoke do
     it "exists for following tests to use, otherwise they are skipped" do
       visit_url(TEST_ENVIRONMENT, p.k12_loan_form_url, p.k12_loan_form_id, p)
       find p.main_form, visible: true, wait: Sleep_lengths[:medium]
@@ -16,7 +16,7 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
     end
   end
 
-  describe "K12 Sad Page 1", sad: true do
+  describe "K12 Sad Page 1", :sad do
     it "has a form for K12 student loans that is filled out Incorrectly" do
       visit_url(TEST_ENVIRONMENT, p.k12_loan_form_url, p.k12_loan_form_id, p)
       fill_out_basic_information_form(p,d)
@@ -29,8 +29,8 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
     end
   end
 
-  describe "K12 Training Happy All Pages", smoke: true do
-    it "has a form for K12 student loans that is filled out correctly", happy: true do
+  describe "K12 Training Happy All Pages", :happy do
+    it "has a form for K12 student loans that is filled out correctly" do
       visit_url(TEST_ENVIRONMENT, p.k12_loan_form_url, p.k12_loan_form_id, p)
       fill_out_basic_information_form(p,d)
       find_by_id p.relationship_to_student
