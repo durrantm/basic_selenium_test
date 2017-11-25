@@ -2,7 +2,7 @@ module FormSections
 
   def fill_out_basic_information_form(form_page, data)
     p,d = form_page, data
-    find_by_id p.first_name, wait: Sleep_lengths[:medium_long]
+    ensure_input_is_visible(p.first_name, Sleep_lengths[:medium_long])
     fill_in p.first_name, with: 'testFirst'
     fill_in p.middle_initial, with: 't'
     fill_in p.last_name, with: 'testLast'
@@ -49,7 +49,8 @@ module FormSections
 
   def fill_out_address(p)
     wait_for_ajax
-    find_by_id p.street_address, wait: Sleep_lengths[:medium_long]
+    #find_by_id p.street_address, wait: Sleep_lengths[:medium_long]
+    ensure_input_is_visible(p.street_address, Sleep_lengths[:medium_long])
     fill_in p.street_address, with: '1 main st'
     fill_in p.street_address_2, with: 'Apt#1'
     fill_in p.city, with: 'New York'
@@ -61,7 +62,7 @@ module FormSections
   def fill_out_education_degree_information(p, this_year)
     fill_out_first_degree(p)
     fill_out_major_enrollment_status(p)
-    find('#' + p.grade_level + ' option:nth-child(2)').select_option
+    select_first_dropdown_option(p.grade_level)
     fill_out_years(p, this_year)
   end
 
@@ -85,14 +86,15 @@ module FormSections
   def fill_out_education_certificate_information(p, this_year)
     fill_out_first_degree(p)
     fill_out_major_enrollment_status(p)
-    find('#' + p.grade_level + ' option:nth-child(2)').select_option
+    select_first_dropdown_option(p.grade_level)
     fill_out_loan_years(p, this_year)
     fill_out_graduation(p, this_year)
   end
 
   def fill_out_first_grade_level(p)
-    find('#' + p.grade_level + ' option:nth-child(2)', visible: true, wait:Sleep_lengths[:medium])
-    find('#' + p.grade_level + ' option:nth-child(2)').select_option
+    #find('#' + p.grade_level + ' option:nth-child(2)', visible: true, wait:Sleep_lengths[:medium])
+    ensure_dropdown_is_visible(p.grade_level)
+    select_first_dropdown_option(p.grade_level)
   end
 
   def fill_out_loan_information(p)
@@ -103,7 +105,8 @@ module FormSections
   end
 
   def fill_out_employment_information(p)
-    find_by_id p.employment_status, visible: true, wait: Sleep_lengths[:medium]
+    #find_by_id p.employment_status, visible: true, wait: Sleep_lengths[:medium]
+    ensure_dropdown_is_visible(p.employment_status)
     select 'Employed PT', from: p.employment_status
     find(p.continue).click
     fill_in p.employer, with: 'test inc'
@@ -115,7 +118,8 @@ module FormSections
   end
 
   def fill_out_financial_information(p)
-    find_by_id p.checking_account, visible: true, wait: Sleep_lengths[:medium]
+    #find_by_id p.checking_account, visible: true, wait: Sleep_lengths[:medium]
+    ensure_input_is_visible(p.checking_account)
     check p.checking_account
     find_by_id p.checking_amount, visible: true
     fill_in p.checking_amount, with: '1000'
@@ -124,7 +128,8 @@ module FormSections
   end
 
   def fill_out_contact_information(p)
-    find_by_id p.primary_contact_first_name, visible: true, wait: Sleep_lengths[:medium]
+    #find_by_id p.primary_contact_first_name, visible: true, wait: Sleep_lengths[:medium]
+    ensure_input_is_visible(p.primary_contact_first_name)
     fill_in p.primary_contact_first_name, with: 'testMomFirst'
     fill_in p.primary_contact_last_name, with: 'testMomLast'
     fill_in p.primary_contact_phone, with: '6175551212'
@@ -148,11 +153,11 @@ module FormSections
 
   def fill_out_school(p, school)
     wait_for_ajax
-    find_by_id p.school, visible: true, wait: Sleep_lengths[:medium]
+    #find_by_id p.school, visible: true, wait: Sleep_lengths[:medium]
+    ensure_input_is_visible(p.school)
     fill_in p.school, with: school
     sleep_short
-    find_by_id(p.school).send_keys :arrow_down
-    find_by_id(p.school).send_keys :tab
+    select_first_dropdown_option(p.school)
   end
 
   def fill_out_first_degree_major_enrollment_status_dropdowns(p)
@@ -161,50 +166,92 @@ module FormSections
   end
 
   def fill_out_first_degree(p)
-    find('#' + p.degree + ' option:nth-child(2)', visible:true, wait:Sleep_lengths[:medium_long])
-    find('#' + p.degree + ' option:nth-child(2)').select_option
+    #find('#' + p.degree + ' option:nth-child(2)', visible:true, wait:Sleep_lengths[:medium_long])
+    ensure_dropdown_option_is_visible(p.degree, Sleep_length[:medium_long])
+    select_first_dropdown_option(p.degree)
   end
 
   def fill_out_major_enrollment_status(p)
-    find('#' + p.major + ' option:nth-child(2)').select_option
-    find('#' + p.enrollment_status + ' option:nth-child(2)').select_option
+    ensure_dropdown_option_is_visible(p.enrollment_status)
+    #find('#' + p.major + ' option:nth-child(2)').select_option
+    select_first_dropdown_option(p.enrollment_status)
   end
 
-  def fill_out_cosigner(p)
-    find 'input#' + p.how_to_apply_individual, visible: true, wait: Sleep_lengths[:medium]
+  def indicate_cosigner(p)
+    #find 'input#' + p.how_to_apply_individual, visible: true, wait: Sleep_lengths[:medium]
+    ensure_input_is_visible(p.how_to_apply_individual)
     choose p.how_to_apply, option: 'J'
-    continue(p)
-    within_frame(find(p.dialog_frame)) do
+		continue(p)
+		within_frame(find(p.dialog_frame)) do
 			first('input#ConsumerICCCosignerwithMe').click
-      click_on 'Continue'
-			find 'img#ElectronicConsentAccept'.click
-			click_on 'ElectronicConsentAccept'
-			sleep 5000
-      sleep 3
-    end
-    sleep 5000
+			click_on 'Continue'
+		end
+	end
+
+  def cosigner_details(p)
+    fill_in 'CO_FirstName', with: 'cosignerFirstName'
+    fill_in 'CO_LastName', with: 'cosignerLastName'
+    fill_in 'CO_MiddleInitial', with: 'a'
+    select 'Parent', from: 'CO_RelationshipToStudent'
+    fill_in 'CO_EmailAddr', with: 'do-not-reply@google.com'
+    fill_in 'CO_PrimaryPhoneNbr', with: '6175551212'
+    select 'JAN', from: 'CO_DOB1'
+    fill_in 'CO_DOB2', with: '01'
+    fill_in 'CO_DOB3', with: '1985'
+    select 'US Citizen', from: 'CO_Citizenship'
+    fill_in 'CO_SSN1_mask', with: '666'
+    fill_in 'CO_SSN2_mask', with: '02'
+    fill_in 'CO_SSN3_mask', with: '0000'
+    fill_in 'CO_ConfirmSSN1_mask', with: '666'
+    fill_in 'CO_ConfirmSSN2_mask', with: '02'
+    fill_in 'CO_ConfirmSSN3_mask', with: '0000'
+    continue(p)
+    fill_in 'CO_PermStreetAddr1', with: '1 main st'
+    fill_in 'CO_PermStreetAddr2', with: ''
+    fill_in 'CO_PermCity', with: 'New York'
+    select 'New York', from: 'CO_PermState'
+    fill_in 'CO_PermZipCode', with: '10024'
+    fill_in 'CO_SecondaryPhoneNbr', with: '6175551213'
+    select '10', from: 'CO_PermAddrLengthYears'
+    continue(p)
+    select 'Employed FT', from: 'CO_EmploymentStatus'
+    find '#CO_CurrEmployerName'
+    fill_in 'CO_CurrEmployerName', with: 'Test Inc'
+    select 'Pilot', from: 'CO_Occupation'
+    fill_in 'CO_WorkPhone', with: '6175551214'
+    fill_in 'CO_WorkPhoneExt', with: '123'
+    select '10', from: 'CO_EmploymentLength'
+    fill_in 'CO_GrossAnnualIncome', with: '1000000'
+    continue(p)
+#    select 'Own', from: 'CO_ResidenceType'
+#    fill_in 'CO_', with: ''
+
+
+sleep 5000
+    fill_in 'CO_', with: ''
+    fill_in 'CO_', with: ''
+    fill_in 'CO_', with: ''
+    fill_in 'CO_', with: ''
+    fill_in 'CO_', with: ''
   end
 
   def choose_individual_application(p)
-    find 'input#' + p.how_to_apply_individual, visible: true, wait: Sleep_lengths[:medium]
+    #find 'input#' + p.how_to_apply_individual, visible: true, wait: Sleep_lengths[:medium]
+    ensure_input_is_visible(p.how_to_apply_individual)
     choose p.how_to_apply, option: 'I'
     continue(p)
   end
 
   def accept_dialogs(p)
     within_frame(find(p.dialog_frame)) do
-      expect(find(p.title, text: /^Information.*Rates.*Fees$/)).to be
-    end
-
-    within_frame(find(p.dialog_frame)) do
       find(p.dialog_continue).click
     end
+    privacy_policy(p)
+  end
 
+  def privacy_policy(p)
     within_frame(find(p.dialog_frame)) do
-      expect(find(p.title, text: /^Privacy Policy$/)).to be
-    end
-
-    within_frame(find(p.dialog_frame)) do
+      find(p.title, text: /^Privacy Policy$/)
       find(p.button_continue).click
     end
   end
@@ -213,6 +260,26 @@ module FormSections
     within_frame(find(p.dialog_frame)) do
       find(p.electronic_consent).click
     end
+  end
+
+  def rates_and_fees(p)
+    within_frame(find(p.dialog_frame)) do
+      #find(p.button_continue).click
+      find(p.dialog_continue).click
+    end
+  end
+
+  def ensure_input_is_visible(input_id, max_wait_time = Sleep_lengths[:medium])
+#sleep 500
+    find('input#' + input_id, visible: true, wait: max_wait_time)
+  end
+
+  def ensure_dropdown_option_is_visible(select_id, max_wait_time = Sleep_lengths[:medium])
+    find 'select#' + select_id + ' option:nth-child(2)', visible: true, wait: max_wait_time
+  end
+
+  def select_first_dropdown_option(select_id)
+    find('select#' + select_id + ' option:nth-child(2)').select_option
   end
 
   def submit_application(p)

@@ -50,10 +50,13 @@ describe 'student loan products', loan_type: 'undergraduate', page_type: 'form',
       continue(p)
       fill_out_contact_information(p)
       continue(p)
-      fill_out_cosigner(p)
-#
-      find p.dialog_frame
-      submit_application(p)
+      indicate_cosigner(p)
+      electronic_consent(p)
+      rates_and_fees(p)
+      privacy_policy(p)
+      click_submit_application(p)
+      cosigner_details(p)
+      cosigner_details(p)
       find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
       expect(find(p.title, text: /^Application Status$/)).to be
       sleep_short
