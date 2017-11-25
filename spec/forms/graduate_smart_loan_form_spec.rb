@@ -9,7 +9,7 @@ describe 'student loan products', loan_type: 'graduate', page_type: 'form', orde
 
   describe "Gradudate Form", :smoke do
     it "exists for following tests to use, otherwise they are skipped" do
-      visit_url(TEST_ENVIRONMENT, p.graduate_loan_form_url, p.graduate_loan_form_id, p)
+      goto_page(p.graduate_loan_form_url, p.graduate_loan_form_id, p)
       find p.main_form, visible: true, wait: Sleep_lengths[:medium]
       expect(find(p.main_form)).to be
     end
@@ -17,7 +17,7 @@ describe 'student loan products', loan_type: 'graduate', page_type: 'form', orde
 
   describe "Graduate Sad Page 1", :sad do
     it "has a form for Graduate student loans that is filled out Incorrectly" do
-      visit_url(TEST_ENVIRONMENT, p.graduate_loan_form_url, p.graduate_loan_form_id, p)
+      goto_page(p.graduate_loan_form_url, p.graduate_loan_form_id, p)
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
       continue(p)
@@ -29,7 +29,7 @@ describe 'student loan products', loan_type: 'graduate', page_type: 'form', orde
 
   describe "Graduate Happy All Pages", :happy do
     it "has a form for Graduate student loans that is filled out correctly" do
-      visit_url(TEST_ENVIRONMENT, p.graduate_loan_form_url, p.graduate_loan_form_id, p)
+      goto_page(p.graduate_loan_form_url, p.graduate_loan_form_id, p)
       fill_out_basic_information_form(p,d)
       continue(p)
       fill_out_address(p)

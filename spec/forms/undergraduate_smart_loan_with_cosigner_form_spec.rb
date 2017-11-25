@@ -9,7 +9,7 @@ describe 'student loan products', loan_type: 'undergraduate', page_type: 'form',
 
   describe "Undergraduate Form", :smoke do
     it "exists for following tests to use, otherwise they are skipped" do
-      visit_url(TEST_ENVIRONMENT, p.undergraduate_loan_form_url, p.undergraduate_loan_form_id, p)
+      goto_page(p.undergraduate_loan_form_url, p.undergraduate_loan_form_id, p)
       find p.main_form, visible: true, wait: Sleep_lengths[:medium]
       expect(find(p.main_form)).to be
     end
@@ -17,7 +17,7 @@ describe 'student loan products', loan_type: 'undergraduate', page_type: 'form',
 
   describe "Undergraduate Happy All Pages **with Cosigner**", :happy do
     it "has a form for undergraduate student loans that is filled out correctly" do
-      visit_url(TEST_ENVIRONMENT, p.undergraduate_loan_form_url, p.undergraduate_loan_form_id, p)
+      goto_page(p.undergraduate_loan_form_url, p.undergraduate_loan_form_id, p)
       fill_out_basic_information_form(p,d)
       continue(p)
       fill_out_address(p)

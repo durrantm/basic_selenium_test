@@ -10,7 +10,7 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
 
   describe "K12 Form", :smoke do
     it "exists for following tests to use, otherwise they are skipped" do
-      visit_url(TEST_ENVIRONMENT, p.k12_loan_form_url, p.k12_loan_form_id, p)
+      goto_page(p.k12_loan_form_url, p.k12_loan_form_id, p)
       find p.main_form, visible: true, wait: Sleep_lengths[:medium]
       expect(find(p.main_form)).to be
     end
@@ -18,7 +18,7 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
 
   describe "K12 Sad Page 1", :sad do
     it "has a form for K12 student loans that is filled out Incorrectly" do
-      visit_url(TEST_ENVIRONMENT, p.k12_loan_form_url, p.k12_loan_form_id, p)
+      goto_page(p.k12_loan_form_url, p.k12_loan_form_id, p)
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
       continue(p)
@@ -31,7 +31,7 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
 
   describe "K12 Training Happy All Pages", :happy do
     it "has a form for K12 student loans that is filled out correctly" do
-      visit_url(TEST_ENVIRONMENT, p.k12_loan_form_url, p.k12_loan_form_id, p)
+      goto_page(p.k12_loan_form_url, p.k12_loan_form_id, p)
       fill_out_basic_information_form(p,d)
       find_by_id p.relationship_to_student
       select 'Parent', from: p.relationship_to_student

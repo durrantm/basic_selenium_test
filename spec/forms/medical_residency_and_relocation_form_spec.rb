@@ -10,7 +10,7 @@ describe 'student loan products', loan_type: 'medical_residency', page_type: 'fo
 
   describe "Medical Residency and Relocation Form", :smoke do
     it "exists for following tests to use, otherwise they are skipped" do
-      visit_url(TEST_ENVIRONMENT, p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
+      goto_page(p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
       find p.main_form, visible: true, wait: Sleep_lengths[:medium]
       expect(find(p.main_form)).to be
     end
@@ -18,7 +18,7 @@ describe 'student loan products', loan_type: 'medical_residency', page_type: 'fo
 
   describe "Medical Residency and relocation Sad Page 1", :sad do
     it "has a form for Medical Residency and Relocation loans that is filled out Incorrectly" do
-      visit_url(TEST_ENVIRONMENT, p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
+      goto_page(p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
       fill_out_basic_information_form(p,d)
       fill_in p.first_name, with: ''
       continue(p)
@@ -30,7 +30,7 @@ describe 'student loan products', loan_type: 'medical_residency', page_type: 'fo
 
   describe "Medical Residency and relocation Happy All Pages", :happy do
     it "has a form for Medical Residency and relocation student loans that is filled out correctly" do
-      visit_url(TEST_ENVIRONMENT, p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
+      goto_page(p.medical_residency_and_relocation_loan_form_url, p.medical_residency_and_relocation_loan_form_id, p)
       fill_out_basic_information_form(p,d)
       continue(p)
       fill_out_address(p)

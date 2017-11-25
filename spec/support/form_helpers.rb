@@ -8,4 +8,8 @@ module FormHelpers
     find_by_id element, wait:Sleep_lengths[:medium]
   end
 
+  def goto_page(url, id, p)
+    visit_url(TEST_ENVIRONMENT, url, id, p)
+  end
+
 end
