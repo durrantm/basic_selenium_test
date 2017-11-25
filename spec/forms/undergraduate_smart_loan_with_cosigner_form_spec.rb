@@ -15,19 +15,7 @@ describe 'student loan products', loan_type: 'undergraduate', page_type: 'form',
     end
   end
 
-  describe "Undergraduate Sad Page 1", sad: true do
-    it "has a form for undergraduate student loans that is filled out Incorrectly" do
-      visit_url(TEST_ENVIRONMENT, p.undergraduate_loan_form_url, p.undergraduate_loan_form_id, p)
-      fill_out_basic_information_form(p,d)
-      fill_in p.first_name, with: ''
-      continue(p)
-      expect(find_by_id(p.first_name).value).to eq ''
-      expect(find_by_id(p.last_name).value).to eq 'testLast'
-      expect(find_by_id(p.email_address).value).to eq d.email
-    end
-  end
-
-  describe "Undergraduate Happy All Pages" do
+  describe "Undergraduate Happy All Pages **with Cosigner**" do
     it "has a form for undergraduate student loans that is filled out correctly", happy: true do
       visit_url(TEST_ENVIRONMENT, p.undergraduate_loan_form_url, p.undergraduate_loan_form_id, p)
       fill_out_basic_information_form(p,d)
@@ -35,8 +23,7 @@ describe 'student loan products', loan_type: 'undergraduate', page_type: 'form',
       fill_out_address(p)
       continue(p)
       fill_out_school(p, 'TRINITY')
-      wait_for_ajax
-      find_by_id_medium p.degree
+      ensure_dropdown_option_is_visible(p.degree)
       fill_out_education_degree_information(p, this_year)
       continue(p)
       find_by_id_medium p.copay
@@ -55,7 +42,6 @@ describe 'student loan products', loan_type: 'undergraduate', page_type: 'form',
       rates_and_fees(p)
       privacy_policy(p)
       click_submit_application(p)
-      cosigner_details(p)
       cosigner_details(p)
       find(p.title, text: /^Application Status$/, wait: Sleep_lengths[:long])
       expect(find(p.title, text: /^Application Status$/)).to be

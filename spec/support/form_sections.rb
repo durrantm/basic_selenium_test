@@ -49,7 +49,6 @@ module FormSections
 
   def fill_out_address(p)
     wait_for_ajax
-    #find_by_id p.street_address, wait: Sleep_lengths[:medium_long]
     ensure_input_is_visible(p.street_address, Sleep_lengths[:medium_long])
     fill_in p.street_address, with: '1 main st'
     fill_in p.street_address_2, with: 'Apt#1'
@@ -92,8 +91,7 @@ module FormSections
   end
 
   def fill_out_first_grade_level(p)
-    #find('#' + p.grade_level + ' option:nth-child(2)', visible: true, wait:Sleep_lengths[:medium])
-    ensure_dropdown_is_visible(p.grade_level)
+    ensure_dropdown_option_is_visible(p.grade_level)
     select_first_dropdown_option(p.grade_level)
   end
 
@@ -105,8 +103,7 @@ module FormSections
   end
 
   def fill_out_employment_information(p)
-    #find_by_id p.employment_status, visible: true, wait: Sleep_lengths[:medium]
-    ensure_dropdown_is_visible(p.employment_status)
+    ensure_dropdown_option_is_visible(p.employment_status)
     select 'Employed PT', from: p.employment_status
     find(p.continue).click
     fill_in p.employer, with: 'test inc'
@@ -118,7 +115,6 @@ module FormSections
   end
 
   def fill_out_financial_information(p)
-    #find_by_id p.checking_account, visible: true, wait: Sleep_lengths[:medium]
     ensure_input_is_visible(p.checking_account)
     check p.checking_account
     find_by_id p.checking_amount, visible: true
@@ -128,7 +124,6 @@ module FormSections
   end
 
   def fill_out_contact_information(p)
-    #find_by_id p.primary_contact_first_name, visible: true, wait: Sleep_lengths[:medium]
     ensure_input_is_visible(p.primary_contact_first_name)
     fill_in p.primary_contact_first_name, with: 'testMomFirst'
     fill_in p.primary_contact_last_name, with: 'testMomLast'
@@ -152,12 +147,11 @@ module FormSections
   end
 
   def fill_out_school(p, school)
-    wait_for_ajax
-    #find_by_id p.school, visible: true, wait: Sleep_lengths[:medium]
     ensure_input_is_visible(p.school)
     fill_in p.school, with: school
     sleep_short
-    select_first_dropdown_option(p.school)
+    wait_for_ajax
+    select_first_school(p.school)
   end
 
   def fill_out_first_degree_major_enrollment_status_dropdowns(p)
@@ -166,19 +160,17 @@ module FormSections
   end
 
   def fill_out_first_degree(p)
-    #find('#' + p.degree + ' option:nth-child(2)', visible:true, wait:Sleep_lengths[:medium_long])
-    ensure_dropdown_option_is_visible(p.degree, Sleep_length[:medium_long])
+    ensure_dropdown_option_is_visible(p.degree, Sleep_lengths[:medium_long])
     select_first_dropdown_option(p.degree)
   end
 
   def fill_out_major_enrollment_status(p)
-    ensure_dropdown_option_is_visible(p.enrollment_status)
-    #find('#' + p.major + ' option:nth-child(2)').select_option
+    ensure_dropdown_option_is_visible(p.major)
+    select_first_dropdown_option(p.major)
     select_first_dropdown_option(p.enrollment_status)
   end
 
   def indicate_cosigner(p)
-    #find 'input#' + p.how_to_apply_individual, visible: true, wait: Sleep_lengths[:medium]
     ensure_input_is_visible(p.how_to_apply_individual)
     choose p.how_to_apply, option: 'J'
 		continue(p)
@@ -189,54 +181,50 @@ module FormSections
 	end
 
   def cosigner_details(p)
-    fill_in 'CO_FirstName', with: 'cosignerFirstName'
-    fill_in 'CO_LastName', with: 'cosignerLastName'
-    fill_in 'CO_MiddleInitial', with: 'a'
-    select 'Parent', from: 'CO_RelationshipToStudent'
-    fill_in 'CO_EmailAddr', with: 'do-not-reply@google.com'
-    fill_in 'CO_PrimaryPhoneNbr', with: '6175551212'
-    select 'JAN', from: 'CO_DOB1'
-    fill_in 'CO_DOB2', with: '01'
-    fill_in 'CO_DOB3', with: '1985'
-    select 'US Citizen', from: 'CO_Citizenship'
-    fill_in 'CO_SSN1_mask', with: '666'
-    fill_in 'CO_SSN2_mask', with: '02'
-    fill_in 'CO_SSN3_mask', with: '0000'
-    fill_in 'CO_ConfirmSSN1_mask', with: '666'
-    fill_in 'CO_ConfirmSSN2_mask', with: '02'
-    fill_in 'CO_ConfirmSSN3_mask', with: '0000'
+    fill_in p.cosigner_first_name, with: 'cosignerFirstName'
+    fill_in p.cosigner_last_name, with: 'cosignerLastName'
+    fill_in p.cosigner_middle_initial, with: 'a'
+    select 'Parent', from: p.cosigner_relationship_to_student
+    fill_in p.cosigner_email, with: 'do-not-reply@google.com'
+    fill_in p.cosigner_primary_phone, with: '6175551212'
+    select 'JAN', from: p.cosigner_dob_month
+    fill_in p.cosigner_dob_day, with: '01'
+    fill_in p.cosigner_dob_year, with: '1985'
+    select 'US Citizen', from: p.cosigner_citizenship
+    fill_in p.cosigner_ssn_first_three, with: '666'
+    fill_in p.cosigner_ssn_middle_two, with: '02'
+    fill_in p.cosigner_ssn_last_four, with: '0000'
+    fill_in p.cosigner_confirm_ssn_first_three, with: '666'
+    fill_in p.cosigner_confirm_ssn_middle_two, with: '02'
+    fill_in p.cosigner_confirm_ssn_last_four, with: '0000'
     continue(p)
-    fill_in 'CO_PermStreetAddr1', with: '1 main st'
-    fill_in 'CO_PermStreetAddr2', with: ''
-    fill_in 'CO_PermCity', with: 'New York'
-    select 'New York', from: 'CO_PermState'
-    fill_in 'CO_PermZipCode', with: '10024'
-    fill_in 'CO_SecondaryPhoneNbr', with: '6175551213'
-    select '10', from: 'CO_PermAddrLengthYears'
+    fill_in p.cosigner_street, with: '1 main st'
+    fill_in p.cosigner_street2, with: ''
+    fill_in p.cosigner_city, with: 'New York'
+    select 'New York', from: p.cosigner_state
+    fill_in p.cosigner_zip, with: '10024'
+    fill_in p.cosigner_primary_phone, with: '6175551213'
+    select '10', from: p.cosigner_permanent_address_years
     continue(p)
-    select 'Employed FT', from: 'CO_EmploymentStatus'
-    find '#CO_CurrEmployerName'
-    fill_in 'CO_CurrEmployerName', with: 'Test Inc'
-    select 'Pilot', from: 'CO_Occupation'
-    fill_in 'CO_WorkPhone', with: '6175551214'
-    fill_in 'CO_WorkPhoneExt', with: '123'
-    select '10', from: 'CO_EmploymentLength'
-    fill_in 'CO_GrossAnnualIncome', with: '1000000'
+    select 'Employed FT', from: p.cosigner_employment_status
+    find_by_id p.cosigner_current_employer_name
+    fill_in p.cosigner_current_employer_name, with: 'Test Inc'
+    select 'Pilot', from: p.cosigner_occupation
+    fill_in p.cosigner_work_phone, with: '6175551214'
+    fill_in p.cosigner_work_phone_ext, with: '123'
+    select '10', from: p.cosigner_employment_length
+    fill_in p.cosigner_gross_annual_income, with: '1000000'
     continue(p)
-#    select 'Own', from: 'CO_ResidenceType'
-#    fill_in 'CO_', with: ''
-
-
-sleep 5000
-    fill_in 'CO_', with: ''
-    fill_in 'CO_', with: ''
-    fill_in 'CO_', with: ''
-    fill_in 'CO_', with: ''
-    fill_in 'CO_', with: ''
+    select_first_dropdown_option(p.cosigner_residence_type)
+    continue(p)
+    certify_status(p)
+    electronic_consent(p)
+    rates_and_fees(p)
+    privacy_policy(p)
+    click_submit_application(p)
   end
 
   def choose_individual_application(p)
-    #find 'input#' + p.how_to_apply_individual, visible: true, wait: Sleep_lengths[:medium]
     ensure_input_is_visible(p.how_to_apply_individual)
     choose p.how_to_apply, option: 'I'
     continue(p)
@@ -264,13 +252,18 @@ sleep 5000
 
   def rates_and_fees(p)
     within_frame(find(p.dialog_frame)) do
-      #find(p.button_continue).click
       find(p.dialog_continue).click
     end
   end
 
+  def certify_status(p)
+    within_frame(find p.dialog_frame) do
+      check 'CertifyStatus'
+      find_by_id('Continue').click
+    end
+  end
+
   def ensure_input_is_visible(input_id, max_wait_time = Sleep_lengths[:medium])
-#sleep 500
     find('input#' + input_id, visible: true, wait: max_wait_time)
   end
 
@@ -280,6 +273,11 @@ sleep 5000
 
   def select_first_dropdown_option(select_id)
     find('select#' + select_id + ' option:nth-child(2)').select_option
+  end
+
+  def select_first_school(select_id)
+    find_by_id(select_id).send_keys :arrow_down
+    find_by_id(select_id).send_keys :tab
   end
 
   def submit_application(p)
