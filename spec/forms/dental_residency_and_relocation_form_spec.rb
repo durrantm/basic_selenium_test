@@ -67,7 +67,6 @@ describe 'student loan products', loan_type: 'dental_residency', page_type: 'for
       fill_out_contact_information(p)
       continue(p)
       choose_individual_application(p)
-      find p.dialog_frame
       if PRODUCTION
         submit_application(p)
       else

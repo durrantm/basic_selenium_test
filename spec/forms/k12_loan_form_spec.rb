@@ -40,7 +40,6 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
       continue(p)
       find_by_id p.student_first_name
       fill_in p.student_first_name, with: 'testfirst'
-      fill_in p.student_first_name, with: 'testfirst'
       fill_in p.student_last_name, with: 'testLast'
       select 'JAN', from: p.student_dob_month
       fill_in p.student_dob_day, with: '01'

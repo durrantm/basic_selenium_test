@@ -52,7 +52,6 @@ describe 'student loan products', loan_type: 'parent', page_type: 'form', order:
       fill_out_financial_information(p)
       continue(p)
       choose_individual_application(p)
-      find p.dialog_frame
       within_frame(find(p.dialog_frame)) do
         first('input#rdoStudentDependentConfirmation').click
       end

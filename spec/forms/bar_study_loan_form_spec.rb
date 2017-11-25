@@ -54,7 +54,6 @@ describe 'student loan products', loan_type: 'bar', page_type: 'form', order: :d
 			fill_out_contact_information(p)
 			continue(p)
 			choose_individual_application(p)
-			find p.dialog_frame, wait: Sleep_lengths[:medium]
       electronic_consent(p)
       privacy_policy(p)
       click_submit_application(p)

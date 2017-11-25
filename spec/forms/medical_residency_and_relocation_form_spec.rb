@@ -35,7 +35,7 @@ describe 'student loan products', loan_type: 'medical_residency', page_type: 'fo
       continue(p)
       fill_out_address(p)
       continue(p)
-      PRODUCTION ? fill_out_school(p, 'NEW YORK') : fill_out_school(p, 'TRINITY')
+      fill_out_school(p, PRODUCTION ? 'NEW YORK' : 'TRINITY')
       wait_for_ajax
       fill_out_first_degree_major_enrollment_status_dropdowns(p)
       fill_out_graduation(p, this_year-1)

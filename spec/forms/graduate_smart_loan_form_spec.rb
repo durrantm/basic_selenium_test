@@ -34,7 +34,6 @@ describe 'student loan products', loan_type: 'graduate', page_type: 'form', orde
       continue(p)
       fill_out_address(p)
       continue(p)
-      find_by_id p.school
       fill_out_school(p, 'Trinity')
       wait_for_ajax
       fill_out_education_degree_information(p, this_year)
@@ -51,7 +50,6 @@ describe 'student loan products', loan_type: 'graduate', page_type: 'form', orde
       fill_out_contact_information(p)
       continue(p)
       choose_individual_application(p)
-      first p.dialog_frame
       submit_application(p)
       expect_to_see_application_status_page(p)
     end

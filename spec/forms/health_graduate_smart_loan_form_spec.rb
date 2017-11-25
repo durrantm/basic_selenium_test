@@ -63,7 +63,6 @@ describe 'student loan products', loan_type: 'health_graduate', page_type: 'form
       fill_out_contact_information(p)
       continue(p)
       choose_individual_application(p)
-      find p.dialog_frame
       if PRODUCTION
         submit_application(p)
       else

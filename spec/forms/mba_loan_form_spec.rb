@@ -53,7 +53,6 @@ describe 'student loan products', loan_type: 'mba', page_type: 'form', order: :d
       fill_out_contact_information(p)
       continue(p)
       choose_individual_application(p)
-      find p.dialog_frame
       submit_application(p)
       expect_to_see_application_status_page(p)
     end
