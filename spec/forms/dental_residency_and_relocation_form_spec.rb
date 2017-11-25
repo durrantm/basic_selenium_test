@@ -72,7 +72,7 @@ describe 'student loan products', loan_type: 'dental_residency', page_type: 'for
         submit_application(p)
       else
         electronic_consent(p)
-        continue_in_dialog_frame(p)
+        privacy_policy(p)
         click_submit_application(p)
       end
       expect_to_see_application_status_page(p)

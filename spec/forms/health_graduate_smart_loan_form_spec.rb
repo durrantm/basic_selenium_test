@@ -68,8 +68,7 @@ describe 'student loan products', loan_type: 'health_graduate', page_type: 'form
         submit_application(p)
       else
         electronic_consent(p)
-        find p.dialog_frame
-        continue_in_dialog_frame(p)
+        privacy_policy(p)
         click_submit_application(p)
       end
       expect_to_see_application_status_page(p)

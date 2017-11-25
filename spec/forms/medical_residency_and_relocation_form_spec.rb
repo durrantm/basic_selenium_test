@@ -54,7 +54,7 @@ describe 'student loan products', loan_type: 'medical_residency', page_type: 'fo
       continue(p)
       choose_individual_application(p)
       electronic_consent(p)
-      continue_in_dialog_frame(p)
+      privacy_policy(p)
       click_submit_application(p)
       expect_to_see_application_status_page(p)
     end

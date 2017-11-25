@@ -64,7 +64,7 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
       choose_individual_application(p)
       find p.dialog_frame
       electronic_consent(p)
-      continue_in_dialog_frame(p)
+      privacy_policy(p)
       click_submit_application(p)
       expect_to_see_application_status_page(p)
     end
