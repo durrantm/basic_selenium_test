@@ -36,7 +36,6 @@ describe 'student loan products', loan_type: 'health_graduate', page_type: 'form
       fill_out_address(p)
       continue(p)
       fill_out_school(p, 'TRINITY')
-      wait_for_ajax
       fill_out_first_degree_major_enrollment_status_dropdowns(p)
       if PRODUCTION
         fill_out_first_grade_level(p)

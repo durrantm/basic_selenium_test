@@ -37,8 +37,6 @@ describe 'student loan products', loan_type: 'career_training', page_type: 'form
       fill_out_address(p)
       continue(p)
       fill_out_school(p, 'NEW YORK METHODIST HOSPITAL')
-      wait_for_ajax
-      find_by_id_medium p.degree
       fill_out_education_certificate_information(p, this_year)
       continue(p)
       find_by_id_medium p.copay

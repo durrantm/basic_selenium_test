@@ -46,7 +46,6 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
       fill_in p.student_dob_year, with: '1996'
       fill_out_student_ssn_and_confirm_ssn(p)
       fill_out_school(p, "NEW YORK MILITARY")
-      wait_for_ajax
       fill_out_first_grade_level(p)
       continue(p)
       find_by_id_medium p.requested_loan
@@ -61,7 +60,6 @@ describe 'K12 loan products', loan_type: 'k12', page_type: 'form', order: :defin
       fill_out_contact_information(p)
       continue(p)
       choose_individual_application(p)
-      find p.dialog_frame
       electronic_consent(p)
       privacy_policy(p)
       click_submit_application(p)

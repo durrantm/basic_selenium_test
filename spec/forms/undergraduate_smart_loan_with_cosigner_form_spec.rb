@@ -1,4 +1,5 @@
 describe 'student loan products', loan_type: 'undergraduate', page_type: 'form', order: :defined do
+
   include Sleepers
   include FormHelpers
   include FormSections
@@ -23,7 +24,6 @@ describe 'student loan products', loan_type: 'undergraduate', page_type: 'form',
       fill_out_address(p)
       continue(p)
       fill_out_school(p, 'TRINITY')
-      ensure_dropdown_option_is_visible(p.degree)
       fill_out_education_degree_information(p, this_year)
       continue(p)
       find_by_id_medium p.copay

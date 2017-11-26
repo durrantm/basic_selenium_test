@@ -37,7 +37,6 @@ describe 'student loan products', loan_type: 'dental_and_medical', page_type: 'f
       continue(p)
       find(p.main_form)
       fill_out_school(p, 'SUNY')
-      wait_for_ajax
       fill_out_first_degree_major_enrollment_status_dropdowns(p)
       fill_out_first_grade_level(p)
       select all('#' + p.periods + ' option').last.text, from: p.periods if PRODUCTION

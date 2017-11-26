@@ -36,8 +36,6 @@ describe 'student loan products', loan_type: 'undergraduate', page_type: 'form',
       fill_out_address(p)
       continue(p)
       fill_out_school(p, 'TRINITY')
-      wait_for_ajax
-      find_by_id_medium p.degree
       fill_out_education_degree_information(p, this_year)
       continue(p)
       find_by_id_medium p.copay

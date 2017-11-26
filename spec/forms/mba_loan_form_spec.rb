@@ -36,7 +36,6 @@ describe 'student loan products', loan_type: 'mba', page_type: 'form', order: :d
       fill_out_address(p)
       continue(p)
       fill_out_school(p, 'COLUMBIA UNIVERSITY')
-      wait_for_ajax
       fill_out_first_degree_major_enrollment_status_dropdowns(p)
       fill_out_first_grade_level(p)
       fill_out_years(p, this_year)

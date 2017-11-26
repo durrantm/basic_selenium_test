@@ -35,9 +35,7 @@ describe 'student loan products', loan_type: 'dental_residency', page_type: 'for
       continue(p)
       fill_out_address(p)
       continue(p)
-      find_by_id p.school
       fill_out_school(p, 'TRINITY')
-      wait_for_ajax
       fill_out_first_degree_major_enrollment_status_dropdowns(p)
       if PRODUCTION
         fill_out_first_grade_level(p)
@@ -57,7 +55,6 @@ describe 'student loan products', loan_type: 'dental_residency', page_type: 'for
         fill_out_disbursement_information(p, this_year)
       end
       continue(p)
-      find_by_id p.employment_status
       fill_out_employment_information(p)
       continue(p)
       find_by_id p.checking_account

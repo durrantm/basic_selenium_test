@@ -36,15 +36,13 @@ describe 'student loan products', loan_type: 'bar', page_type: 'form', order: :d
 			fill_out_address(p)
 			continue(p)
 			fill_out_school(p, 'DRAKE')
-			wait_for_ajax
       fill_out_first_degree(p)
       select 'Full Time', from: p.enrollment_status
       fill_out_graduation(p, this_year-2)
       select 'Jan', from: p.exam_date_month
       select this_year, from: p.exam_date_year
       continue(p)
-			find_by_id_medium p.requested_loan
-			fill_in p.requested_loan, with: 10000
+			fill_in p.requested_loan, with: 10000, wait: Sleep_lengths[:medium]
 			fill_out_disbursement_information(p, this_year)
 			continue(p)
 			fill_out_employment_information(p)

@@ -59,6 +59,7 @@ module FormSections
   end
 
   def fill_out_education_degree_information p, this_year
+    ensure_dropdown_option_is_visible(p.degree)
     fill_out_first_degree p
     fill_out_major_enrollment_status p
     select_first_dropdown_option p.grade_level
@@ -155,6 +156,7 @@ module FormSections
   end
 
   def fill_out_first_degree_major_enrollment_status_dropdowns p
+    wait_for_ajax
     fill_out_first_degree p
     fill_out_major_enrollment_status p
   end

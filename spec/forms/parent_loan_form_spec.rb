@@ -39,7 +39,6 @@ describe 'student loan products', loan_type: 'parent', page_type: 'form', order:
       find p.main_form
       fill_out_student_info(p)
       fill_out_school(p, 'NEW YORK LAW SCHOOL, NEW YORK, NY, 00278300')
-      wait_for_ajax
       fill_out_education_degree_information(p, this_year)
       continue(p)
       find_by_id_medium p.copay
